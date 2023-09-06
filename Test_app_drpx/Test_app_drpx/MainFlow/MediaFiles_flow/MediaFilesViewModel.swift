@@ -34,8 +34,8 @@ final class MediaFilesViewModel {
         model.fetchMoreFilesAction
     }
     
-    var service: DropboxServiceManager {
-        model.dropboxService
+    var dropboxCacheService: DropboxCacheProtocol {
+        model.dropboxCacheService
     }
     
     private let model: MediaFilesModel

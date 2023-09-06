@@ -11,20 +11,15 @@ import SwiftyDropbox
 final class MediaFilesAssembly: Assembly {
     
     func assemble(container: Container) {
-        container.register(DropboxClient.self) { _ in
-            let client = DropboxClient(accessToken: AppConstants.shared.apiKey)
-            
-            return client
-        }
-        
-        container.register(DropboxServiceManager.self) { r in
-            return DropboxServiceManager()
-        }.inObjectScope(.container)
-        
         container.register(MediaFilesModel.self) { (r, parent: NavigationNode?) in
             let dropboxService = r.resolve(DropboxServiceManager.self)!
+            let dropboxCache = r.resolve(DropboxCacheManager.self)!
             
-            return MediaFilesModel(parent: parent, dropboxService: dropboxService)
+            return MediaFilesModel(
+                parent: parent,
+                dropboxService: dropboxService,
+                dropboxCacheService: dropboxCache
+            )
         }
         
         container.register(MediaFilesViewModel.self) { r in

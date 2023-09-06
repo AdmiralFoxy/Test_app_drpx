@@ -47,11 +47,11 @@ final class MainFilesCellInfoView: UICollectionViewCell {
     
     // MARK: - Initialization
     
-    weak var viewModel: MainFilesCellInfoViewModel! {
+    var viewModel: MainFilesCellInfoViewModel! {
         didSet {
-            configureViews()
             setupSubviews()
             setupBindings()
+            configureViews()
         }
     }
     
@@ -129,7 +129,8 @@ final class MainFilesCellInfoView: UICollectionViewCell {
         }
         
         thumbnailImageView.snp.makeConstraints {
-            $0.bottom.equalTo(titleLabel.snp.top).inset(8.0)
+            $0.leading.equalTo(titleLabel.snp.leading).inset(8.0)
+            $0.width.height.equalTo(45.0)
         }
         
         menuButton.snp.makeConstraints {

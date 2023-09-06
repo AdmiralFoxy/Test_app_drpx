@@ -17,10 +17,6 @@ final class AuthAssembly: Assembly {
             return client
         }
         
-        container.register(DropboxServiceManager.self) { r in
-            return DropboxServiceManager()
-        }.inObjectScope(.container)
-        
         container.register(AuthModel.self) { r in
             let dropboxService = r.resolve(DropboxServiceManager.self)!
             

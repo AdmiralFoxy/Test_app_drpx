@@ -157,7 +157,7 @@ extension MediaFilesView: UICollectionViewDelegate {
             cellTapAction: viewModel.cellTapAction,
             moveFileAction: viewModel.moveFileAction,
             deleteFileAction: viewModel.deleteFileAction,
-            dropboxService: viewModel.service
+            cacheDropboxService: viewModel.dropboxCacheService
         )
         cell.viewModel = MainFilesCellInfoViewModel(model: model)
         

@@ -14,17 +14,17 @@ final class DropboxServiceManager: DropboxServiceProtocol {
     private let cursorSubject = CurrentValueSubject<String?, Never>(nil)
     private let hasMoreSubject = CurrentValueSubject<Bool, Never>(true)
     
-    private var cursor: String?
-    private var hasMore: Bool = true
+    private(set) var cursor: String?
+    private(set) var hasMore: Bool = true
     
-    private var authorizedClient: DropboxClient? {
+    var authClient: DropboxClient? {
         DropboxClientsManager.authorizedClient
     }
     
     func downloadFile(path: String) -> AnyPublisher<MediaFile?, Error> {
         Deferred {
             Future<MediaFile?, Error> { [weak self] promise in
-                self?.authorizedClient?.files.download(path: path).response { response, error in
+                self?.authClient?.files.download(path: path).response { response, error in
                     if let (metadata, data) = response {
                         let fileData = MediaFile.setupMetadata(data: data, metadata: metadata)
                         promise(.success(fileData))
@@ -57,42 +57,42 @@ final class DropboxServiceManager: DropboxServiceProtocol {
         )
     }
     
-    func fetchNextPage() -> AnyPublisher<[Files.Metadata]?, Error> {
+    func fetchNextPage() -> AnyPublisher<Files.ListFolderResult?, Error> {
         Deferred {
-            Future<[Files.Metadata]?, Error> { [weak self] promise in
+            Future<Files.ListFolderResult?, Error> { [weak self] promise in
                 guard let self = self else {
                     promise(.failure(CustomError.selfIsNil))
                     return
                 }
                 
-                let completion: (Files.ListFolderResult?, CallError<Files.ListFolderError>?, @escaping ([Files.Metadata]?, Error?) -> Void) -> Void = { response, error, completion in
+                let completion: (Files.ListFolderResult?, CallError<Files.ListFolderError>?, @escaping (Files.ListFolderResult?, Error?) -> Void) -> Void = { response, error, completion in
                     if let result = response {
                         self.cursorSubject.send(result.cursor)
-                        completion(result.entries, nil)
+                        completion(result, nil)
                     } else if let error = error {
                         completion(nil, error as? Error)
                     }
                 }
                 
-                if let cursor = try? self.cursorSubject.value, cursor != nil {
-                    self.authorizedClient?.files.listFolderContinue(cursor: cursor).response { response, error in
-                        completion((response, error) { entries, error in
+                if let cursor = self.cursorSubject.value {
+                    self.authClient?.files.listFolderContinue(cursor: cursor).response { response, error in
+                        completion(response, nil) { result, error in
                             if let error = error {
                                 promise(.failure(error))
                             } else {
-                                promise(.success(entries))
+                                promise(.success(result))
                             }
-                        })
+                        }
                     }
                 } else {
-                    self.authorizedClient?.files.listFolder(path: "", limit: 6).response { response, error in
-                        completion(response, error, { entries, error in
+                    self.authClient?.files.listFolder(path: "", limit: 6).response { response, error in
+                        completion(response, nil) { result, error in
                             if let error = error {
                                 promise(.failure(error))
                             } else {
-                                promise(.success(entries))
+                                promise(.success(result))
                             }
-                        })
+                        }
                     }
                 }
             }
@@ -100,18 +100,18 @@ final class DropboxServiceManager: DropboxServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    func downloadPreview(path: String) -> AnyPublisher<UIImage?, Error> {
+    func downloadPreview(path: String) -> AnyPublisher<Data?, Error> {
         Deferred {
-            Future<UIImage?, Error> { [weak self] promise in
-                self?.authorizedClient?.files.getThumbnailV2(
-                    resource: .path(path),
+            Future<Data?, Error> { [weak self] promise in
+                self?.authClient?.files.getThumbnail(
+                    path: path,
                     format: .jpeg,
-                    size: .w640h480,
+                    size: .w64h64,
                     mode: .bestfit
                 ).response { response, error in
                     if let (_, data) = response {
-                        let image = UIImage(data: data)
-                        promise(.success(image))
+                        promise(.success(data))
+                        
                     } else if let error = error {
                         print("Error downloading preview: \(error)")
                         promise(.failure(error as? Error ?? CustomError.unknownError))

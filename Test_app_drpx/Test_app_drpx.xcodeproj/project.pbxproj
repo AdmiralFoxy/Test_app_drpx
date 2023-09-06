@@ -47,6 +47,8 @@
 		8597DEAA2AA8EEDB004103A6 /* Cache in Frameworks */ = {isa = PBXBuildFile; productRef = 8597DEA92AA8EEDB004103A6 /* Cache */; };
 		8597DEAC2AA8EF1E004103A6 /* DropboxServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEAB2AA8EF1E004103A6 /* DropboxServiceProtocol.swift */; };
 		8597DEAF2AA8EF55004103A6 /* DropboxCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEAE2AA8EF55004103A6 /* DropboxCacheManager.swift */; };
+		8597DEB22AA9328A004103A6 /* AppSingletoneAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEB12AA9328A004103A6 /* AppSingletoneAssembly.swift */; };
+		8597DEB42AA9363C004103A6 /* CacheUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEB32AA9363C004103A6 /* CacheUtility.swift */; };
 		85A7D18C2AA2B72900794801 /* DropboxService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D18B2AA2B72900794801 /* DropboxService.swift */; };
 		85A7D1902AA3399400794801 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D18F2AA3399400794801 /* AppConstants.swift */; };
 		85A7D1932AA33D6100794801 /* Publisher+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1922AA33D6100794801 /* Publisher+Ext.swift */; };
@@ -126,6 +128,8 @@
 		858BB2CF2AA8985000333DD6 /* FileInfoAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInfoAssembly.swift; sourceTree = "<group>"; };
 		8597DEAB2AA8EF1E004103A6 /* DropboxServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxServiceProtocol.swift; sourceTree = "<group>"; };
 		8597DEAE2AA8EF55004103A6 /* DropboxCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxCacheManager.swift; sourceTree = "<group>"; };
+		8597DEB12AA9328A004103A6 /* AppSingletoneAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSingletoneAssembly.swift; sourceTree = "<group>"; };
+		8597DEB32AA9363C004103A6 /* CacheUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheUtility.swift; sourceTree = "<group>"; };
 		85A7D18B2AA2B72900794801 /* DropboxService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxService.swift; sourceTree = "<group>"; };
 		85A7D18F2AA3399400794801 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		85A7D1922AA33D6100794801 /* Publisher+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Ext.swift"; sourceTree = "<group>"; };
@@ -349,6 +353,7 @@
 		858BB2D12AA8A09A00333DD6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				8597DEB12AA9328A004103A6 /* AppSingletoneAssembly.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -358,9 +363,17 @@
 			children = (
 				8597DEAB2AA8EF1E004103A6 /* DropboxServiceProtocol.swift */,
 				85A7D19E2AA393D600794801 /* DropboxServiceManager.swift */,
-				8597DEAE2AA8EF55004103A6 /* DropboxCacheManager.swift */,
 			);
 			path = DropboxService;
+			sourceTree = "<group>";
+		};
+		8597DEB02AA93245004103A6 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				8597DEAE2AA8EF55004103A6 /* DropboxCacheManager.swift */,
+				8597DEB32AA9363C004103A6 /* CacheUtility.swift */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		85A7D18D2AA3397000794801 /* Assembly */ = {
@@ -421,6 +434,7 @@
 		85A7D19D2AA393C900794801 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8597DEB02AA93245004103A6 /* Cache */,
 				8597DEAD2AA8EF21004103A6 /* DropboxService */,
 			);
 			path = Services;
@@ -682,11 +696,13 @@
 				855B5FF22AA7DB5300F9F07A /* CustomError.swift in Sources */,
 				8597DEAC2AA8EF1E004103A6 /* DropboxServiceProtocol.swift in Sources */,
 				85A7D1A72AA3A8F900794801 /* MainFilesCellInfoModel.swift in Sources */,
+				8597DEB22AA9328A004103A6 /* AppSingletoneAssembly.swift in Sources */,
 				855B5FFF2AA7E9E200F9F07A /* VideoView_ViewModel.swift in Sources */,
 				8503F18E2AA280C6000F8461 /* ViewState.swift in Sources */,
 				858BB2C92AA896AB00333DD6 /* FileInfoModel.swift in Sources */,
 				85A7D19F2AA393D600794801 /* DropboxServiceManager.swift in Sources */,
 				858BB2D02AA8985000333DD6 /* FileInfoAssembly.swift in Sources */,
+				8597DEB42AA9363C004103A6 /* CacheUtility.swift in Sources */,
 				8552766E2A9FB11E0082BA75 /* SceneDelegate.swift in Sources */,
 				858BB2CE2AA8970900333DD6 /* FileInfoViewController.swift in Sources */,
 			);

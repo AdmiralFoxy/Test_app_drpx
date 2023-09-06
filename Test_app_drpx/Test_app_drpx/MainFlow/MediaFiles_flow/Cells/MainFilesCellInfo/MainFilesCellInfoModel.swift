@@ -58,10 +58,13 @@ private extension MainFilesCellInfoModel {
         
         imageLoadCancellable = cacheDropboxService.downloadPreview(path: filePath)
             .compactMap { $0 }
-            .sink { [weak self] image in
-                self?.setImgPreviewAction.send(image)
-            }
+            .call(self, type(of: self).setupImage)
+    }
+    
+    func setupImage(_ data: Data) {
+        if let image = UIImage(data: data) {
+            setImgPreviewAction.send(image)
+        }
     }
     
 }
-

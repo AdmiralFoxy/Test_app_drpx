@@ -22,15 +22,22 @@ final class MediaFilesModel: NavigationNode {
     let cellDeleteFileAction = PassthroughSubject<Void, Never>()
     
     let dropboxService: DropboxServiceManager
+    let dropboxCacheService: DropboxCacheProtocol
     
+    private(set) var loadFilesPubl: AnyPublisher<[Files.Metadata]?, Error>?
     private var cursor: String?
     private var hasMore = true
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: initialize
     
-    init(parent: NavigationNode?, dropboxService: DropboxServiceManager) {
+    init(
+        parent: NavigationNode?,
+        dropboxService: DropboxServiceManager,
+        dropboxCacheService: DropboxCacheProtocol
+    ) {
         self.dropboxService = dropboxService
+        self.dropboxCacheService = dropboxCacheService
         
         super.init(parent: parent)
         
@@ -77,42 +84,18 @@ private extension MediaFilesModel {
         
         viewState.send(.loading)
         
-        if let cursor = cursor {
-            fetchMoreMediaFiles(with: cursor)
-        } else {
-            fetchInitialMediaFiles()
-        }
-    }
-    
-    func fetchInitialMediaFiles() {
-        let client = dropboxService.authorizedClient
-        
-        client?.files.listFolder(path: "", limit: 6).response { [weak self] response, error in
-            self?.processMediaFilesResponse(response: response, error: error as? Error)
-        }
-    }
-    
-    func fetchMoreMediaFiles(with cursor: String) {
-        print("### Fetching more media files with cursor.")
-        
-        let client = dropboxService.authorizedClient
-        
-        client?.files.listFolderContinue(cursor: cursor).response { [weak self] response, error in
-            self?.processMediaFilesResponse(response: response, error: error as? Error)
-        }
+        dropboxService.fetchNextPage()
+            .call(self, type(of: self).processMediaFilesResponse)
+            .store(in: &cancellables)
     }
     
     // MARK: handle loaded files
     
-    func processMediaFilesResponse(response: Files.ListFolderResult?, error: Error?) {
-        if let error = error {
-            print("### Error fetching media files: \(error)")
-            self.viewState.send(.onFailure(error.localizedDescription))
-            return
-        }
-        
+    func processMediaFilesResponse(response: Files.ListFolderResult?) {
         guard let result = response else {
-            print("### Result is nil, exiting.")
+            print("### Error fetching media files")
+            viewState.send(.onFailure("Error fetching media files"))
+            
             return
         }
         
@@ -146,9 +129,10 @@ private extension MediaFilesModel {
         
         print("### Sending fetched media files to the subscriber.")
         
-        var currentFiles = try? self.mediaFiles.value
-        currentFiles?.append(contentsOf: newFiles)
-        self.mediaFiles.send(currentFiles ?? [])
+        var currentFiles = mediaFiles.value
+        
+        currentFiles.append(contentsOf: newFiles)
+        mediaFiles.send(currentFiles)
     }
     
 }

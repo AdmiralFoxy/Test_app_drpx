@@ -22,7 +22,7 @@ enum DetailViewEvents: NavigationEvent {
         }
         
         switch fileExtension {
-        case "jpg", "jpeg", "png", "svg":
+        case "jpg", "jpeg", "png":
             return .showImage(filePath: path)
         case "pdf":
             return .showPDF(filePath: path)
@@ -79,6 +79,7 @@ final class AppCoordinator: NavigationNode {
 extension AppCoordinator {
     
     private func assemblyRegistr() {
+        AppSingletoneAssembly().assemble(container: container)
         MainContainerAssembly().assemble(container: container)
         AuthAssembly().assemble(container: container)
         MediaFilesAssembly().assemble(container: container)

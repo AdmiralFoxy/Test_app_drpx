@@ -12,8 +12,8 @@ import SwiftyDropbox
 protocol DropboxServiceProtocol {
     
     func downloadFile(path: String) -> AnyPublisher<MediaFile?, Error>
-    func downloadPreview(path: String) -> AnyPublisher<UIImage?, Error>
-    func fetchNextPage() -> AnyPublisher<[Files.Metadata]?, Error>
+    func downloadPreview(path: String) -> AnyPublisher<Data?, Error>
+    func fetchNextPage() -> AnyPublisher<Files.ListFolderResult?, Error>
     func authorizeFromController(controller: UIViewController)
     func hasMoreFiles() -> Bool
     
