@@ -12,7 +12,7 @@ final class PDFAssembly: Assembly {
     func assemble(container: Container) {
         container.register(PDFModel.self) { (
             r,
-            path: String,
+            path: FilePath,
             dropboxService: DropboxServiceManager
         ) in
             let parent = r.resolve(NavigationNode.self)!
@@ -24,11 +24,11 @@ final class PDFAssembly: Assembly {
             )
         }
         
-        container.register(PDFViewModel.self) { r in
-            let model = r.resolve(PDFModel.self)!
-            
-            return PDFViewModel(model: model)
-        }
+//        container.register(PDFViewModel.self) { r in
+//            let model = r.resolve(PDFModel.self)!
+//            
+//            return PDFViewModel(model: model)
+//        }
         
         container.register(PDFViewController.self) { r in
             let viewModel = r.resolve(PDFViewModel.self)!

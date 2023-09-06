@@ -11,6 +11,7 @@ enum CustomError: Error {
     
     case selfDeallocated
     case unknownError
+    case selfIsNil
     
     var localizedDescription: String {
         switch self {
@@ -19,6 +20,9 @@ enum CustomError: Error {
             
         case .unknownError:
             return "An unknown error occurred."
+            
+        case .selfIsNil:
+            return "self is nil"
         }
     }
     

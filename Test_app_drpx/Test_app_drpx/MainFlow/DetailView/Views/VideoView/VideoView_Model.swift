@@ -14,15 +14,15 @@ final class VideoView_Model: NavigationNode, DVBaseMediaModel {
     var setDataAction: PassthroughSubject<Data, Never> = .init()
     var viewState: CurrentValueSubject<ViewState, Never> = .init(.idle)
     
-    var filePath: String
-    var fileData: Data?
+    var filePath: FilePath
+    var fileInfo: MediaFile?
     var dropboxService: DropboxServiceManager
     
     private var cancellables = Set<AnyCancellable>()
     
     init(
         parent: NavigationNode?,
-        path: String,
+        path: FilePath,
         dropboxService: DropboxServiceManager
     ) {
         self.filePath = path
@@ -60,9 +60,8 @@ extension VideoView_Model {
     
     func actionHandle(_ type: DVButtonType) {
         switch type {
-        case .info(let path):
-            break
-//            raise(event: AppMainEvents.infoView(path: path))
+        case .info(let file):
+            raise(event: AppMainEvents.infoView(file: file))
             
         case .close:
             raise(event: AppMainEvents.mainFiles)

@@ -9,7 +9,7 @@ import Foundation
 
 enum DVButtonType {
     
-    case info(path: String)
+    case info(file: MediaFile)
     case close
     
 }

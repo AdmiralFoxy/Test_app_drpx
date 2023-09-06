@@ -16,14 +16,14 @@ final class ImageView_Model: NavigationNode, DVBaseMediaModel {
     var viewState: CurrentValueSubject<ViewState, Never> = .init(.idle)
     
     var dropboxService: DropboxServiceManager
-    var filePath: String
-    var fileData: Data?
+    var filePath: FilePath
+    var fileInfo: MediaFile?
     
     private var cancellables = Set<AnyCancellable>()
     
     init(
         parent: NavigationNode?,
-        path: String,
+        path: FilePath,
         dropboxService: DropboxServiceManager
     ) {
         self.filePath = path
@@ -61,9 +61,8 @@ private extension ImageView_Model {
     
     func actionHandle(_ type: DVButtonType) {
         switch type {
-        case .info(let path):
-            break
-//            raise(event: AppMainEvents.infoView(path: path))
+        case .info(let file):
+            raise(event: AppMainEvents.infoView(file: file))
             
         case .close:
             raise(event: AppMainEvents.mainFiles)

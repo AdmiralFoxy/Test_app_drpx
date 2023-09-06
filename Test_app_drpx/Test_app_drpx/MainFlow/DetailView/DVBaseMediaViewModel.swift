@@ -13,7 +13,9 @@ protocol DVBaseMediaViewModel {
     var setDataAction: PassthroughSubject<Data, Never> { get }
     var viewState: CurrentValueSubject<ViewState, Never> { get }
     var viewButtonAction: PassthroughSubject<DVButtonType, Never> { get }
-    var filePath: String { get }
+    
+    var fileInfo: MediaFile? { get }
+    var filePath: FilePath { get }
     var model: DVBaseMediaModel { get set }
     
     init(model: DVBaseMediaModel)
@@ -34,7 +36,11 @@ extension DVBaseMediaViewModel {
         model.viewButtonAction
     }
     
-    var filePath: String {
+    var fileInfo: MediaFile? {
+        model.fileInfo
+    }
+    
+    var filePath: FilePath {
         model.filePath
     }
     

@@ -11,9 +11,27 @@ import Swinject
 
 enum DetailViewEvents: NavigationEvent {
     
-    case showImage(filePath: String)
-    case showPDF(filePath: String)
-    case showVideo(filePath: String)
+    case showImage(filePath: FilePath)
+    case showPDF(filePath: FilePath)
+    case showVideo(filePath: FilePath)
+    
+    static func getDetailViewEvent(for path: FilePath) -> DetailViewEvents? {
+        let formattedPath = path.path.replacingOccurrences(of: " ", with: "%20")
+        guard let fileExtension = URL(string: formattedPath)?.pathExtension.lowercased() else {
+            return nil
+        }
+        
+        switch fileExtension {
+        case "jpg", "jpeg", "png", "svg":
+            return .showImage(filePath: path)
+        case "pdf":
+            return .showPDF(filePath: path)
+        case "mp4", "mov", "avi":
+            return .showVideo(filePath: path)
+        default:
+            return nil
+        }
+    }
     
 }
 
@@ -22,8 +40,7 @@ enum AppMainEvents: NavigationEvent {
     
     case auth
     case mainFiles
-//    case detailView(MediaFile)
-//    case infoView(path: String)
+    case infoView(file: MediaFile)
     
 }
 
@@ -67,6 +84,7 @@ extension AppCoordinator {
         MediaFilesAssembly().assemble(container: container)
         VideoViewAssembly().assemble(container: container)
         ImageViewAssembly().assemble(container: container)
+        FileDetailAssembly().assemble(container: container)
     }
     
     private func setupHandler() {
@@ -95,26 +113,33 @@ extension AppCoordinator {
             case .mainFiles:
                 self.navigateToMain()
                 
-//            case .detailView(let mediaFile):
-//                self.navigateToDetailView(mediaFile: mediaFile)
-                
-//            case .infoView(let path):
-                //                self.
+            case .infoView(let file):
+                self.navigateToInfoView(for: file)
             }
         }
     }
     
-    private func navigateToImageView(filePath: String) {
-        if let vc: ImageView = container.resolve(
-            ImageView.self,
-            arguments: filePath,
-            container.resolve(DropboxServiceManager.self)
+    private func navigateToInfoView(for fileDetail: MediaFile) {
+        let parent = container.resolve(NavigationNode.self)!
+        
+        if let vc: FileInfoViewController = container.resolve(
+            FileInfoViewController.self,
+            arguments: fileDetail,
+            parent
         ) {
             switchTo(vc)
         }
     }
     
-    private func navigateToPDFView(filePath: String) {
+    private func navigateToImageView(filePath: FilePath) {
+        let dropboxService = container.resolve(DropboxServiceManager.self)!
+        
+        if let vc: ImageView = container.resolve(ImageView.self, arguments: filePath, dropboxService) {
+            switchTo(vc)
+        }
+    }
+    
+    private func navigateToPDFView(filePath: FilePath) {
         if let vc: PDFViewController = container.resolve(
             PDFViewController.self,
             arguments: filePath,
@@ -124,10 +149,10 @@ extension AppCoordinator {
         }
     }
     
-    private func navigateToVideoView(filePath: String) {
+    private func navigateToVideoView(filePath: FilePath) {
         if let vc: VideoView_ViewController = container.resolve(
             VideoView_ViewController.self,
-            arguments: filePath,
+            arguments: filePath.path,
             container.resolve(DropboxServiceManager.self)
         ) {
             switchTo(vc)
@@ -152,25 +177,17 @@ extension AppCoordinator {
         let oldVC = containerViewController.children.first
         let newVC = viewController
         
-        // Если oldVC существует, удаляем его
         oldVC?.willMove(toParent: nil)
-        
-        // Добавляем новый VC как дочерний элемент
         containerViewController.addChild(newVC)
-        
-        // Устанавливаем размер и положение нового VC
         newVC.view.frame = containerViewController.view.bounds
         
         if let oldVC = oldVC {
-            // Если oldVC существует, используем анимацию для перехода
             containerViewController.transition(
                 from: oldVC,
                 to: newVC,
                 duration: 0.3,
                 options: [],
-                animations: {
-                    // ваш код для анимации
-                },
+                animations: { },
                 completion: { _ in
                     oldVC.removeFromParent()
                     newVC.didMove(toParent: containerViewController)
@@ -181,4 +198,5 @@ extension AppCoordinator {
             newVC.didMove(toParent: containerViewController)
         }
     }
+    
 }

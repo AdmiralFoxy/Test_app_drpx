@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import SwiftyDropbox
 
-final class MediaFilesModel {
+final class MediaFilesModel: NavigationNode {
     
     // MARK: - properties
     
@@ -17,15 +17,22 @@ final class MediaFilesModel {
     let viewState = CurrentValueSubject<ViewState, Never>(.idle)
     let fetchMoreFilesAction = PassthroughSubject<Void, Never>()
     
-    private let dropboxService: DropboxServiceManager
+    let cellTapAction = PassthroughSubject<FilePath, Never>()
+    let cellMoveFileAction = PassthroughSubject<Void, Never>()
+    let cellDeleteFileAction = PassthroughSubject<Void, Never>()
+    
+    let dropboxService: DropboxServiceManager
+    
     private var cursor: String?
     private var hasMore = true
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: initialize
     
-    init(dropboxService: DropboxServiceManager) {
+    init(parent: NavigationNode?, dropboxService: DropboxServiceManager) {
         self.dropboxService = dropboxService
+        
+        super.init(parent: parent)
         
         setupBindings()
         fetchMoreFilesAction.send(())
@@ -37,10 +44,25 @@ final class MediaFilesModel {
 
 private extension MediaFilesModel {
     
+    // MARK: setup bindings
+    
     func setupBindings() {
         fetchMoreFilesAction
             .sink(receiveValue: fetchMediaFiles)
             .store(in: &cancellables)
+        
+        cellTapAction
+            .call(self, type(of: self).cellTapHandle)
+            .store(in: &cancellables)
+    }
+    
+    func cellTapHandle(path: FilePath) {
+        guard let event = DetailViewEvents.getDetailViewEvent(for: path) else {
+            viewState.send(.onFailure("error file format"))
+            return
+        }
+        
+        raise(event: event)
     }
     
     // MARK: fetch files
@@ -65,7 +87,7 @@ private extension MediaFilesModel {
     func fetchInitialMediaFiles() {
         let client = dropboxService.authorizedClient
         
-        client?.files.listFolder(path: "").response { [weak self] response, error in
+        client?.files.listFolder(path: "", limit: 6).response { [weak self] response, error in
             self?.processMediaFilesResponse(response: response, error: error as? Error)
         }
     }
@@ -79,6 +101,8 @@ private extension MediaFilesModel {
             self?.processMediaFilesResponse(response: response, error: error as? Error)
         }
     }
+    
+    // MARK: handle loaded files
     
     func processMediaFilesResponse(response: Files.ListFolderResult?, error: Error?) {
         if let error = error {
@@ -111,7 +135,8 @@ private extension MediaFilesModel {
                     contentHash: "",
                     id: file.id,
                     isDownloadable: file.isDownloadable,
-                    size: Int(file.size)
+                    size: Int(file.size),
+                    data: nil
                 )
                 
                 return media

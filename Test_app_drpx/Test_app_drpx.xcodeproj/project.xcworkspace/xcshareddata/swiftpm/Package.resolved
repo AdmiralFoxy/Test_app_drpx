@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "cache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hyperoslo/Cache",
+      "state" : {
+        "branch" : "master",
+        "revision" : "d048bf404a5c8362c6cf840c2096d5777975cd27"
+      }
+    },
+    {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SnapKit/SnapKit",

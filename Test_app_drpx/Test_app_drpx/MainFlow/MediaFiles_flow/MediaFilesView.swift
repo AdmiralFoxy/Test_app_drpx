@@ -30,10 +30,8 @@ final class MediaFilesView: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(
-            width: view.frame.width / 1.8,
-            height: view.frame.width / 1.8
-        )
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -128,6 +126,7 @@ private extension MediaFilesView {
 // MARK: - UICollectionViewDataSource
 
 extension MediaFilesView: UICollectionViewDataSource {
+    
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -154,7 +153,11 @@ extension MediaFilesView: UICollectionViewDelegate {
         
         let model = MainFilesCellInfoModel(
             title: mediaFile.name,
-            path: mediaFile.path
+            filePath: mediaFile.path,
+            cellTapAction: viewModel.cellTapAction,
+            moveFileAction: viewModel.moveFileAction,
+            deleteFileAction: viewModel.deleteFileAction,
+            dropboxService: viewModel.service
         )
         cell.viewModel = MainFilesCellInfoViewModel(model: model)
         
@@ -163,6 +166,21 @@ extension MediaFilesView: UICollectionViewDelegate {
         }
         
         return cell
+    }
+    
+}
+
+extension MediaFilesView: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let insets = collectionView.contentInset
+        let width = collectionView.bounds.width - (insets.left + insets.right)
+        
+        return CGSize(width: width, height: 120.0)
     }
     
 }

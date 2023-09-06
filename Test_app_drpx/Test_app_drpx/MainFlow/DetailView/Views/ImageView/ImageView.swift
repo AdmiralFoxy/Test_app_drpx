@@ -126,7 +126,9 @@ extension ImageView: DVBaseMediaViewController {
     
     @objc
     func infoButtonPressed() {
-        viewModel.viewButtonAction.send(.info(path: viewModel.filePath))
+        guard let info = viewModel.fileInfo else { return }
+        
+        viewModel.viewButtonAction.send(.info(file: info))
     }
     
     func setupView() {
@@ -146,13 +148,15 @@ extension ImageView: DVBaseMediaViewController {
             $0.leading.equalToSuperview().inset(24.0)
             $0.top.equalToSuperview().inset(54.0)
         }
-        closeButton.backgroundColor = .red
+        closeButton.backgroundColor = .gray
         
         view.addSubview(infoButton)
         infoButton.snp.makeConstraints {
-            $0.center.equalTo(closeButton.snp.center)
+            $0.width.height.equalTo(40.0)
+            $0.top.equalToSuperview().inset(54.0)
             $0.trailing.equalToSuperview().inset(24.0)
         }
+        infoButton.backgroundColor = .lightGray
     }
     
 }

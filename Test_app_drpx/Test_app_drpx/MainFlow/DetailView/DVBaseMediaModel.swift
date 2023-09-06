@@ -14,15 +14,15 @@ protocol DVBaseMediaModel {
     var setDataAction: PassthroughSubject<Data, Never> { get }
     var viewState: CurrentValueSubject<ViewState, Never> { get }
     
-    var filePath: String { get set }
-    var fileData: Data? { get set }
+    var filePath: FilePath { get set }
+    var fileInfo: MediaFile? { get set }
     var dropboxService: DropboxServiceManager { get set }
     
-    func loadFileData(_ path: String) -> Future<Data, Error>
+    func loadFileData(_ path: FilePath) -> AnyPublisher<Data, Error>
     
     init(
         parent: NavigationNode?,
-        path: String,
+        path: FilePath,
         dropboxService: DropboxServiceManager
     )
     
@@ -30,23 +30,27 @@ protocol DVBaseMediaModel {
 
 extension DVBaseMediaModel {
     
-    func loadFileData(_ path: String) -> Future<Data, Error> {
+    func loadFileData(_ path: FilePath) -> AnyPublisher<Data, Error> {
         viewState.send(.loading)
         
-        return Future { promise in
-            dropboxService.downloadFile(path: path) { data, error in
-                if let data = data {
+        return dropboxService.downloadFile(path: path.path)
+            .flatMap { fileData -> AnyPublisher<Data, Error> in
+                if let data = fileData?.data {
                     self.setDataAction.send(data)
                     self.viewState.send(.onSuccess)
-                    promise(.success(data))
                     
-                } else if let error = error {
-                    let message = error.localizedDescription
-                    self.viewState.send(.onFailure(message))
-                    promise(.failure(error))
+                    return Just(data)
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                } else {
+                    let error = CustomError.unknownError
+                    
+                    self.viewState.send(.onFailure(error.localizedDescription))
+                    return Fail(error: error)
+                        .eraseToAnyPublisher()
                 }
             }
-        }
+            .eraseToAnyPublisher()
     }
     
 }

@@ -18,21 +18,19 @@ final class MediaFilesAssembly: Assembly {
         }
         
         container.register(DropboxServiceManager.self) { r in
-            let client = r.resolve(DropboxClient.self)!
-            
-            return DropboxServiceManager(client: client)
+            return DropboxServiceManager()
         }.inObjectScope(.container)
         
-        container.register(MediaFilesModel.self) { r in
+        container.register(MediaFilesModel.self) { (r, parent: NavigationNode?) in
             let dropboxService = r.resolve(DropboxServiceManager.self)!
             
-            return MediaFilesModel(dropboxService: dropboxService)
+            return MediaFilesModel(parent: parent, dropboxService: dropboxService)
         }
         
         container.register(MediaFilesViewModel.self) { r in
-            let model = r.resolve(MediaFilesModel.self)!
+            let model = r.resolve(MediaFilesModel.self, argument: container.resolve(NavigationNode.self))
             
-            return MediaFilesViewModel(model: model)
+            return MediaFilesViewModel(model: model!)
         }
         
         container.register(MediaFilesView.self) { r in

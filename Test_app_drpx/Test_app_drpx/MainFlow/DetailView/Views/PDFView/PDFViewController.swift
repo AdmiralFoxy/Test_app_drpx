@@ -82,7 +82,7 @@ final class PDFViewController: UIViewController, DVBaseMediaViewController {
     
     @objc
     func infoButtonPressed() {
-        viewModel.viewButtonAction.send(.info(path: viewModel.filePath))
+//        viewModel.viewButtonAction.send(.info(path: viewModel.filePath))
     }
     
 }

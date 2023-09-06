@@ -5,17 +5,63 @@
 //  Created by Stanislav Avramenko on 02/09/2023.
 //
 
-import Foundation
+import Combine
 import UIKit
 
 final class MainFilesCellInfoModel {
     
-    let title: String
-    let path: String
+    let cellTapAction: PassthroughSubject<FilePath, Never>
+    let moveFileAction: PassthroughSubject<Void, Never>
+    let deleteFileAction: PassthroughSubject<Void, Never>
     
-    init(title: String, path: String) {
+    let setImgPreviewAction = PassthroughSubject<UIImage, Never>()
+    let cancelImgLoadingAction = PassthroughSubject<Void, Never>()
+    
+    let title: String
+    let filePath: String
+    
+    private var imageLoadCancellable: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
+    
+    private let cacheDropboxService: DropboxCacheProtocol
+    
+    init(
+        title: String,
+        filePath: String,
+        cellTapAction: PassthroughSubject<FilePath, Never>,
+        moveFileAction: PassthroughSubject<Void, Never>,
+        deleteFileAction: PassthroughSubject<Void, Never>,
+        cacheDropboxService: DropboxCacheProtocol
+    ) {
+        self.cellTapAction = cellTapAction
+        self.moveFileAction = moveFileAction
+        self.deleteFileAction = deleteFileAction
+        
+        self.cacheDropboxService = cacheDropboxService
+        
         self.title = title
-        self.path = path
+        self.filePath = filePath
+        
+        setupBindings()
     }
     
 }
+
+private extension MainFilesCellInfoModel {
+    
+    func setupBindings() {
+        cancelImgLoadingAction
+            .sink { [weak self] in
+                self?.imageLoadCancellable?.cancel()
+            }
+            .store(in: &cancellables)
+        
+        imageLoadCancellable = cacheDropboxService.downloadPreview(path: filePath)
+            .compactMap { $0 }
+            .sink { [weak self] image in
+                self?.setImgPreviewAction.send(image)
+            }
+    }
+    
+}
+

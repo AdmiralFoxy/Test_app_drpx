@@ -10,6 +10,18 @@ import Combine
 
 final class MediaFilesViewModel {
     
+    var cellTapAction: PassthroughSubject<FilePath, Never> {
+        model.cellTapAction
+    }
+    
+    var moveFileAction: PassthroughSubject<Void, Never> {
+        model.cellMoveFileAction
+    }
+    
+    var deleteFileAction: PassthroughSubject<Void, Never> {
+        model.cellDeleteFileAction
+    }
+    
     var viewState: CurrentValueSubject<ViewState, Never> {
         model.viewState
     }
@@ -20,6 +32,10 @@ final class MediaFilesViewModel {
     
     var fetchMoreFilesAction: PassthroughSubject<Void, Never> {
         model.fetchMoreFilesAction
+    }
+    
+    var service: DropboxServiceManager {
+        model.dropboxService
     }
     
     private let model: MediaFilesModel
