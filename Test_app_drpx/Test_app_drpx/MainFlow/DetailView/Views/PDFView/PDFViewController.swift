@@ -1,16 +1,24 @@
 //
-//  ImageView.swift
+//  PDFViewController.swift
 //  Test_app_drpx
 //
-//  Created by Stanislav Avramenko on 04/09/2023.
+//  Created by Stanislav Avramenko on 06/09/2023.
 //
 
+import Foundation
 import UIKit
+import PDFKit
 import Combine
 
-final class ImageView: UIViewController {
+final class PDFViewController: UIViewController, DVBaseMediaViewController {
     
-    var viewModel: DVBaseMediaViewModel
+    private var cancellables = Set<AnyCancellable>()
+    
+    private lazy var pdfView: PDFView = {
+        let view = PDFView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -41,13 +49,7 @@ final class ImageView: UIViewController {
         return button
     }()
     
-    private lazy var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    private var cancellables = Set<AnyCancellable>()
+    var viewModel: DVBaseMediaViewModel
     
     init(viewModel: DVBaseMediaViewModel) {
         self.viewModel = viewModel
@@ -64,52 +66,6 @@ final class ImageView: UIViewController {
         
         setupBindings()
         setupView()
-    }
-    
-}
-
-extension ImageView: DVBaseMediaViewController {
-    
-    func setupDetailsView(data value: Data) {
-        guard let image = UIImage(data: value) else { return }
-        
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            
-            self.imageView.image = image
-            self.viewModel.viewState.send(.onSuccess)
-        }
-    }
-    
-    func handleViewState(_ state: ViewState) {
-        switch state {
-        case .loading:
-            activityIndicator.startAnimating()
-            imageView.isHidden = true
-            
-        case .idle:
-            activityIndicator.stopAnimating()
-            imageView.isHidden = true
-            
-        case .onSuccess:
-            activityIndicator.stopAnimating()
-            imageView.isHidden = false
-            
-        case .onFailure(let string):
-            activityIndicator.stopAnimating()
-            imageView.isHidden = true
-            showErrorAlert(with: string)
-        }
-    }
-    
-    func setupBindings() {
-        viewModel.setDataAction
-            .call(self, type(of: self).setupDetailsView)
-            .store(in: &cancellables)
-        
-        viewModel.viewState
-            .call(self, type(of: self).handleViewState)
-            .store(in: &cancellables)
     }
     
     func showErrorAlert(with message: String) {
@@ -129,15 +85,54 @@ extension ImageView: DVBaseMediaViewController {
         viewModel.viewButtonAction.send(.info(path: viewModel.filePath))
     }
     
+}
+
+extension PDFViewController {
+    
+    func setupBindings() {
+        viewModel.viewState
+            .receive(on: RunLoop.main)
+            .call(self, type(of: self).handleViewState)
+            .store(in: &cancellables)
+        
+        viewModel.setDataAction
+            .receive(on: RunLoop.main)
+            .call(self, type(of: self).setupDetailsView)
+            .store(in: &cancellables)
+    }
+    
+    
+    
+    func handleViewState(_ viewState: ViewState) {
+        switch viewState {
+        case .loading:
+            activityIndicator.startAnimating()
+            pdfView.isHidden = true
+            
+        case .idle:
+            activityIndicator.stopAnimating()
+            pdfView.isHidden = false
+            
+        case .onSuccess:
+            activityIndicator.stopAnimating()
+            pdfView.isHidden = false
+            
+        case .onFailure(let string):
+            activityIndicator.stopAnimating()
+            pdfView.isHidden = true
+            showErrorAlert(with: string)
+        }
+    }
+    
     func setupView() {
+        view.addSubview(pdfView)
+        pdfView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         view.addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints {
             $0.center.equalToSuperview()
-        }
-        
-        view.addSubview(imageView)
-        imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
         }
         
         view.addSubview(closeButton)
@@ -146,13 +141,25 @@ extension ImageView: DVBaseMediaViewController {
             $0.leading.equalToSuperview().inset(24.0)
             $0.top.equalToSuperview().inset(54.0)
         }
-        closeButton.backgroundColor = .red
         
         view.addSubview(infoButton)
         infoButton.snp.makeConstraints {
             $0.center.equalTo(closeButton.snp.center)
             $0.trailing.equalToSuperview().inset(24.0)
         }
+        
+        closeButton.backgroundColor = .red
+        infoButton.backgroundColor = .red
+    }
+    
+    func setupDetailsView(data value: Data) {
+        if let document = PDFDocument(data: value) {
+            pdfView.document = document
+        } else {
+            viewModel.viewState.send(.onFailure("error setup pdf file"))
+        }
+        
+        viewModel.viewState.send(.onSuccess)
     }
     
 }

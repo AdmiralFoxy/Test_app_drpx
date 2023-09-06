@@ -38,7 +38,7 @@ final class DropboxServiceManager {
     func authorizeFromController(controller: UIViewController) {
         let scopeRequest = ScopeRequest(
             scopeType: .user,
-            scopes: ["file_requests.read", "files.content.read", "files.metadata.read"],
+            scopes: ["file_requests.read", "files.content.read", "files.metadata.read", "account_info.read"],
             includeGrantedScopes: false
         )
         

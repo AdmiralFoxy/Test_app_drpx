@@ -1,23 +1,22 @@
 //
-//  ImageView_Model.swift
+//  VideoView_Model.swift
 //  Test_app_drpx
 //
-//  Created by Stanislav Avramenko on 04/09/2023.
+//  Created by Stanislav Avramenko on 06/09/2023.
 //
 
-import Foundation
 import Combine
 import UIKit
 
-final class ImageView_Model: NavigationNode, DVBaseMediaModel {
+final class VideoView_Model: NavigationNode, DVBaseMediaModel {
     
     var viewButtonAction: PassthroughSubject<DVButtonType, Never> = .init()
     var setDataAction: PassthroughSubject<Data, Never> = .init()
     var viewState: CurrentValueSubject<ViewState, Never> = .init(.idle)
     
-    var dropboxService: DropboxServiceManager
     var filePath: String
     var fileData: Data?
+    var dropboxService: DropboxServiceManager
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -36,7 +35,7 @@ final class ImageView_Model: NavigationNode, DVBaseMediaModel {
     
 }
 
-private extension ImageView_Model {
+extension VideoView_Model {
     
     func setupBindings() {
         viewButtonAction

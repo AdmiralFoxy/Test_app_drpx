@@ -1,15 +1,13 @@
 //
-//  ImageViewModel.swift
+//  VideoView_ViewModel.swift
 //  Test_app_drpx
 //
-//  Created by Stanislav Avramenko on 04/09/2023.
+//  Created by Stanislav Avramenko on 06/09/2023.
 //
 
 import Foundation
-import Combine
-import UIKit
 
-final class ImageViewModel: DVBaseMediaViewModel {
+final class VideoView_ViewModel: DVBaseMediaViewModel {
     
     var model: DVBaseMediaModel
     

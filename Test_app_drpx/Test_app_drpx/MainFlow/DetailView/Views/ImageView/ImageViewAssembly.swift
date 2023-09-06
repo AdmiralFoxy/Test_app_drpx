@@ -17,7 +17,7 @@ final class ImageViewAssembly: Assembly {
         ) in
             let parent = r.resolve(NavigationNode.self)!
             
-            let model = ImageView_Model(
+            return ImageView_Model(
                 parent: parent,
                 path: path,
                 dropboxService: dropboxService
@@ -26,16 +26,14 @@ final class ImageViewAssembly: Assembly {
         
         container.register(ImageViewModel.self) { r in
             let model = r.resolve(ImageView_Model.self)!
-            let viewModel = ImageViewModel(model: model)
             
-            return viewModel
+            return ImageViewModel(model: model)
         }
         
         container.register(ImageView.self) { r in
             let viewModel = r.resolve(ImageViewModel.self)!
-            let viewController = ImageView(viewModel: viewModel)
             
-            return viewController
+            return ImageView(viewModel: viewModel)
         }
     }
     

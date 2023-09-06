@@ -22,8 +22,8 @@ enum AppMainEvents: NavigationEvent {
     
     case auth
     case mainFiles
-    case detailView(MediaFile)
-    case infoView(path: String)
+//    case detailView(MediaFile)
+//    case infoView(path: String)
     
 }
 
@@ -65,25 +65,25 @@ extension AppCoordinator {
         MainContainerAssembly().assemble(container: container)
         AuthAssembly().assemble(container: container)
         MediaFilesAssembly().assemble(container: container)
-        DetailViewAssembly().assemble(container: container)
+        VideoViewAssembly().assemble(container: container)
         ImageViewAssembly().assemble(container: container)
     }
     
     private func setupHandler() {
         addHandler { [weak self] (event: DetailViewEvents) in
-                guard let self = self else { return }
+            guard let self = self else { return }
+            
+            switch event {
+            case .showImage(let filePath):
+                self.navigateToImageView(filePath: filePath)
                 
-                switch event {
-                case .showImage(let filePath):
-                    self.navigateToImageView(filePath: filePath)
-                    
-                case .showPDF(let data):
-                    self.navigateToPDFView(data: data)
-                    
-                case .showVideo(let data):
-                    self.navigateToVideoView(data: data)
-                }
+            case .showPDF(let filePath):
+                self.navigateToPDFView(filePath: filePath)
+                
+            case .showVideo(let filePath):
+                self.navigateToVideoView(filePath: filePath)
             }
+        }
         
         addHandler { [weak self] (event: AppMainEvents) in
             guard let self = self else { return }
@@ -95,10 +95,10 @@ extension AppCoordinator {
             case .mainFiles:
                 self.navigateToMain()
                 
-            case .detailView(let mediaFile):
-                self.navigateToDetailView(mediaFile: mediaFile)
+//            case .detailView(let mediaFile):
+//                self.navigateToDetailView(mediaFile: mediaFile)
                 
-            case .infoView(let path): break
+//            case .infoView(let path):
                 //                self.
             }
         }
@@ -108,21 +108,28 @@ extension AppCoordinator {
         if let vc: ImageView = container.resolve(
             ImageView.self,
             arguments: filePath,
-            container.resolve(
-                DropboxServiceManager.self
-            )) {
+            container.resolve(DropboxServiceManager.self)
+        ) {
             switchTo(vc)
         }
     }
-
-    private func navigateToPDFView(data: Data) {
-        if let vc: PDFView = container.resolve(PDFView.self, argument: data) {
+    
+    private func navigateToPDFView(filePath: String) {
+        if let vc: PDFViewController = container.resolve(
+            PDFViewController.self,
+            arguments: filePath,
+            container.resolve(DropboxServiceManager.self)
+        ) {
             switchTo(vc)
         }
     }
-
-    private func navigateToVideoView(data: Data) {
-        if let vc: VideoView = container.resolve(VideoView.self, argument: data) {
+    
+    private func navigateToVideoView(filePath: String) {
+        if let vc: VideoView_ViewController = container.resolve(
+            VideoView_ViewController.self,
+            arguments: filePath,
+            container.resolve(DropboxServiceManager.self)
+        ) {
             switchTo(vc)
         }
     }
@@ -136,17 +143,6 @@ extension AppCoordinator {
     private func navigateToMain() {
         if let vc: MediaFilesView = container.resolve(MediaFilesView.self) {
             switchTo(UINavigationController(rootViewController: vc))
-        }
-    }
-    
-    private func navigateToDetailView(mediaFile: MediaFile) {
-        if let vc: DVViewController = container.resolve(
-            DVViewController.self,
-            argument: mediaFile
-        ) {
-            let navController = UINavigationController(rootViewController: vc)
-            navController.modalPresentationStyle = .fullScreen
-            containerViewController?.present(navController, animated: true, completion: nil)
         }
     }
     

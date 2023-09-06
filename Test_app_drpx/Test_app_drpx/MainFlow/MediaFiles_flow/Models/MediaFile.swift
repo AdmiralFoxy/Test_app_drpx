@@ -11,6 +11,12 @@ struct MediaFile {
     
     let name: String
     let path: String
+    let clientModified: Date
+    let serverModified: Date
+    let contentHash: String
+    let id: String
+    let isDownloadable: Bool
+    let size: Int
     
 }
 

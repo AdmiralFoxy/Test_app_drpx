@@ -9,10 +9,6 @@ import Foundation
 import Combine
 import SwiftyDropbox
 
-import Foundation
-import Combine
-import SwiftyDropbox
-
 final class MediaFilesModel {
     
     // MARK: - properties
@@ -107,7 +103,18 @@ private extension MediaFilesModel {
             print("### Entry description: \(entry.description)")
             if let file = entry as? Files.FileMetadata {
                 print("### Processing file: \(file.name)")
-                return MediaFile(name: file.name, path: file.pathLower ?? "")
+                let media = MediaFile(
+                    name: file.name,
+                    path: file.pathLower ?? "",
+                    clientModified: file.clientModified,
+                    serverModified: file.serverModified,
+                    contentHash: "",
+                    id: file.id,
+                    isDownloadable: file.isDownloadable,
+                    size: Int(file.size)
+                )
+                
+                return media
             }
             return nil
         }

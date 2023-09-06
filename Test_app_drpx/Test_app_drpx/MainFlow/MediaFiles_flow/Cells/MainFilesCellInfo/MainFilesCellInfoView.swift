@@ -45,6 +45,15 @@ final class MainFilesCellInfoView: UICollectionViewCell {
         super.init(frame: frame)
     }
     
+    override init(frame: CGRect) {
+        self.viewModel = MainFilesCellInfoViewModel(model: MainFilesCellInfoModel(title: "", path: ""))
+        
+        super.init(frame: frame)
+        
+        setupSubviews()
+    }
+    
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -70,7 +79,7 @@ final class MainFilesCellInfoView: UICollectionViewCell {
             guard let self = self else { return }
             
             self.titleLabel.text = viewModel.title
-            self.thumbnailImageView.image = viewModel.image
+            
         }
     }
     

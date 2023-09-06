@@ -27,6 +27,18 @@
 		855276832A9FB1210082BA75 /* Test_app_drpxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855276822A9FB1210082BA75 /* Test_app_drpxTests.swift */; };
 		8552768D2A9FB1210082BA75 /* Test_app_drpxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8552768C2A9FB1210082BA75 /* Test_app_drpxUITests.swift */; };
 		8552768F2A9FB1210082BA75 /* Test_app_drpxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8552768E2A9FB1210082BA75 /* Test_app_drpxUITestsLaunchTests.swift */; };
+		855B5FE82AA7CED700F9F07A /* PDFModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FE72AA7CED700F9F07A /* PDFModel.swift */; };
+		855B5FEA2AA7CF1700F9F07A /* PDFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FE92AA7CF1700F9F07A /* PDFViewModel.swift */; };
+		855B5FEC2AA7CF2D00F9F07A /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FEB2AA7CF2D00F9F07A /* PDFViewController.swift */; };
+		855B5FEE2AA7CF6D00F9F07A /* PDFAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FED2AA7CF6D00F9F07A /* PDFAssembly.swift */; };
+		855B5FF02AA7D98800F9F07A /* DVBaseMediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FEF2AA7D98800F9F07A /* DVBaseMediaModel.swift */; };
+		855B5FF22AA7DB5300F9F07A /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FF12AA7DB5300F9F07A /* CustomError.swift */; };
+		855B5FF42AA7DD3D00F9F07A /* DVBaseMediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FF32AA7DD3D00F9F07A /* DVBaseMediaViewModel.swift */; };
+		855B5FF82AA7E78600F9F07A /* DVBaseMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FF72AA7E78600F9F07A /* DVBaseMediaViewController.swift */; };
+		855B5FFB2AA7E8DE00F9F07A /* VideoViewAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FFA2AA7E8DE00F9F07A /* VideoViewAssembly.swift */; };
+		855B5FFD2AA7E95000F9F07A /* VideoView_Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FFC2AA7E95000F9F07A /* VideoView_Model.swift */; };
+		855B5FFF2AA7E9E200F9F07A /* VideoView_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FFE2AA7E9E200F9F07A /* VideoView_ViewModel.swift */; };
+		855B60012AA7EA0600F9F07A /* VideoView_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B60002AA7EA0600F9F07A /* VideoView_ViewController.swift */; };
 		85A7D18C2AA2B72900794801 /* DropboxService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D18B2AA2B72900794801 /* DropboxService.swift */; };
 		85A7D1902AA3399400794801 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D18F2AA3399400794801 /* AppConstants.swift */; };
 		85A7D1932AA33D6100794801 /* Publisher+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1922AA33D6100794801 /* Publisher+Ext.swift */; };
@@ -41,12 +53,7 @@
 		85A7D1AB2AA3A98600794801 /* MainFilesCellInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1AA2AA3A98600794801 /* MainFilesCellInfoView.swift */; };
 		85A7D1AE2AA3EF5F00794801 /* MainContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1AD2AA3EF5F00794801 /* MainContainerView.swift */; };
 		85A7D1B22AA3F06B00794801 /* MainContainerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1B12AA3F06B00794801 /* MainContainerAssembly.swift */; };
-		85A7D1B52AA5240100794801 /* DetailViewAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1B42AA5240100794801 /* DetailViewAssembly.swift */; };
-		85A7D1B72AA524C100794801 /* DVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1B62AA524C100794801 /* DVViewModel.swift */; };
-		85A7D1B92AA5255300794801 /* DVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1B82AA5255300794801 /* DVModel.swift */; };
-		85A7D1BB2AA525EB00794801 /* DVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1BA2AA525EB00794801 /* DVViewController.swift */; };
 		85A7D1BF2AA530D600794801 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1BE2AA530D600794801 /* FileType.swift */; };
-		85A7D1C22AA5433700794801 /* FileViewersAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1C12AA5433700794801 /* FileViewersAssembly.swift */; };
 		85A7D1C52AA5441700794801 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1C42AA5441700794801 /* ImageView.swift */; };
 		85A7D1C92AA54B6100794801 /* DVButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1C82AA54B6100794801 /* DVButtonType.swift */; };
 		85A7D1CD2AA54C3600794801 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1CC2AA54C3600794801 /* ImageViewModel.swift */; };
@@ -92,6 +99,18 @@
 		855276882A9FB1210082BA75 /* Test_app_drpxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test_app_drpxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8552768C2A9FB1210082BA75 /* Test_app_drpxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_app_drpxUITests.swift; sourceTree = "<group>"; };
 		8552768E2A9FB1210082BA75 /* Test_app_drpxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_app_drpxUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		855B5FE72AA7CED700F9F07A /* PDFModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFModel.swift; sourceTree = "<group>"; };
+		855B5FE92AA7CF1700F9F07A /* PDFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewModel.swift; sourceTree = "<group>"; };
+		855B5FEB2AA7CF2D00F9F07A /* PDFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
+		855B5FED2AA7CF6D00F9F07A /* PDFAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFAssembly.swift; sourceTree = "<group>"; };
+		855B5FEF2AA7D98800F9F07A /* DVBaseMediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVBaseMediaModel.swift; sourceTree = "<group>"; };
+		855B5FF12AA7DB5300F9F07A /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
+		855B5FF32AA7DD3D00F9F07A /* DVBaseMediaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVBaseMediaViewModel.swift; sourceTree = "<group>"; };
+		855B5FF72AA7E78600F9F07A /* DVBaseMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVBaseMediaViewController.swift; sourceTree = "<group>"; };
+		855B5FFA2AA7E8DE00F9F07A /* VideoViewAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewAssembly.swift; sourceTree = "<group>"; };
+		855B5FFC2AA7E95000F9F07A /* VideoView_Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView_Model.swift; sourceTree = "<group>"; };
+		855B5FFE2AA7E9E200F9F07A /* VideoView_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView_ViewModel.swift; sourceTree = "<group>"; };
+		855B60002AA7EA0600F9F07A /* VideoView_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView_ViewController.swift; sourceTree = "<group>"; };
 		85A7D18B2AA2B72900794801 /* DropboxService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxService.swift; sourceTree = "<group>"; };
 		85A7D18F2AA3399400794801 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		85A7D1922AA33D6100794801 /* Publisher+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Ext.swift"; sourceTree = "<group>"; };
@@ -106,12 +125,7 @@
 		85A7D1AA2AA3A98600794801 /* MainFilesCellInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFilesCellInfoView.swift; sourceTree = "<group>"; };
 		85A7D1AD2AA3EF5F00794801 /* MainContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerView.swift; sourceTree = "<group>"; };
 		85A7D1B12AA3F06B00794801 /* MainContainerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerAssembly.swift; sourceTree = "<group>"; };
-		85A7D1B42AA5240100794801 /* DetailViewAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewAssembly.swift; sourceTree = "<group>"; };
-		85A7D1B62AA524C100794801 /* DVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVViewModel.swift; sourceTree = "<group>"; };
-		85A7D1B82AA5255300794801 /* DVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVModel.swift; sourceTree = "<group>"; };
-		85A7D1BA2AA525EB00794801 /* DVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVViewController.swift; sourceTree = "<group>"; };
 		85A7D1BE2AA530D600794801 /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
-		85A7D1C12AA5433700794801 /* FileViewersAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileViewersAssembly.swift; sourceTree = "<group>"; };
 		85A7D1C42AA5441700794801 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		85A7D1C82AA54B6100794801 /* DVButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVButtonType.swift; sourceTree = "<group>"; };
 		85A7D1CC2AA54C3600794801 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
@@ -282,6 +296,28 @@
 			path = Test_app_drpxUITests;
 			sourceTree = "<group>";
 		};
+		855B5FE62AA7CEC500F9F07A /* PDFView */ = {
+			isa = PBXGroup;
+			children = (
+				855B5FE72AA7CED700F9F07A /* PDFModel.swift */,
+				855B5FE92AA7CF1700F9F07A /* PDFViewModel.swift */,
+				855B5FEB2AA7CF2D00F9F07A /* PDFViewController.swift */,
+				855B5FED2AA7CF6D00F9F07A /* PDFAssembly.swift */,
+			);
+			path = PDFView;
+			sourceTree = "<group>";
+		};
+		855B5FF92AA7E8CC00F9F07A /* VideoView */ = {
+			isa = PBXGroup;
+			children = (
+				855B5FFA2AA7E8DE00F9F07A /* VideoViewAssembly.swift */,
+				855B5FFC2AA7E95000F9F07A /* VideoView_Model.swift */,
+				855B5FFE2AA7E9E200F9F07A /* VideoView_ViewModel.swift */,
+				855B60002AA7EA0600F9F07A /* VideoView_ViewController.swift */,
+			);
+			path = VideoView;
+			sourceTree = "<group>";
+		};
 		85A7D18D2AA3397000794801 /* Assembly */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,22 +410,13 @@
 		85A7D1B32AA523EF00794801 /* DetailView */ = {
 			isa = PBXGroup;
 			children = (
+				855B5FEF2AA7D98800F9F07A /* DVBaseMediaModel.swift */,
+				855B5FF32AA7DD3D00F9F07A /* DVBaseMediaViewModel.swift */,
 				85A7D1C02AA5433000794801 /* Views */,
 				85A7D1BD2AA530CE00794801 /* Common */,
-				85A7D1BC2AA530C300794801 /* Assembly */,
-				85A7D1B62AA524C100794801 /* DVViewModel.swift */,
-				85A7D1B82AA5255300794801 /* DVModel.swift */,
-				85A7D1BA2AA525EB00794801 /* DVViewController.swift */,
+				855B5FF72AA7E78600F9F07A /* DVBaseMediaViewController.swift */,
 			);
 			path = DetailView;
-			sourceTree = "<group>";
-		};
-		85A7D1BC2AA530C300794801 /* Assembly */ = {
-			isa = PBXGroup;
-			children = (
-				85A7D1B42AA5240100794801 /* DetailViewAssembly.swift */,
-			);
-			path = Assembly;
 			sourceTree = "<group>";
 		};
 		85A7D1BD2AA530CE00794801 /* Common */ = {
@@ -397,6 +424,7 @@
 			children = (
 				85A7D1BE2AA530D600794801 /* FileType.swift */,
 				85A7D1C82AA54B6100794801 /* DVButtonType.swift */,
+				855B5FF12AA7DB5300F9F07A /* CustomError.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -404,18 +432,11 @@
 		85A7D1C02AA5433000794801 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				855B5FF92AA7E8CC00F9F07A /* VideoView */,
+				855B5FE62AA7CEC500F9F07A /* PDFView */,
 				85A7D1C62AA5473B00794801 /* ImageView */,
-				85A7D1C32AA5440500794801 /* Assembly */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		85A7D1C32AA5440500794801 /* Assembly */ = {
-			isa = PBXGroup;
-			children = (
-				85A7D1C12AA5433700794801 /* FileViewersAssembly.swift */,
-			);
-			path = Assembly;
 			sourceTree = "<group>";
 		};
 		85A7D1C62AA5473B00794801 /* ImageView */ = {
@@ -572,39 +593,46 @@
 				8503F1902AA282AA000F8461 /* String+Ext.swift in Sources */,
 				8503F19E2AA29C3B000F8461 /* NavigationNode.swift in Sources */,
 				85A7D1962AA38C8300794801 /* MediaFilesModel.swift in Sources */,
+				855B5FEC2AA7CF2D00F9F07A /* PDFViewController.swift in Sources */,
 				8503F17D2AA260D9000F8461 /* AuthViewModel.swift in Sources */,
-				85A7D1B72AA524C100794801 /* DVViewModel.swift in Sources */,
 				85A7D1B22AA3F06B00794801 /* MainContainerAssembly.swift in Sources */,
-				85A7D1B52AA5240100794801 /* DetailViewAssembly.swift in Sources */,
+				855B5FEA2AA7CF1700F9F07A /* PDFViewModel.swift in Sources */,
 				85A7D1BF2AA530D600794801 /* FileType.swift in Sources */,
 				85A7D1C52AA5441700794801 /* ImageView.swift in Sources */,
-				85A7D1B92AA5255300794801 /* DVModel.swift in Sources */,
 				8503F1982AA298C8000F8461 /* AppNavigator.swift in Sources */,
 				85A7D1A32AA3A73500794801 /* MediaFilesView.swift in Sources */,
 				85A7D1CF2AA54C5A00794801 /* ImageView_Model.swift in Sources */,
 				85A7D1CD2AA54C3600794801 /* ImageViewModel.swift in Sources */,
+				855B5FF02AA7D98800F9F07A /* DVBaseMediaModel.swift in Sources */,
 				85A7D1932AA33D6100794801 /* Publisher+Ext.swift in Sources */,
 				85A7D19C2AA38D6500794801 /* MediaFilesAssembly.swift in Sources */,
 				85A7D1A92AA3A93400794801 /* MainFilesCellInfoViewModel.swift in Sources */,
 				8503F1892AA27533000F8461 /* AuthModel.swift in Sources */,
+				855B5FFD2AA7E95000F9F07A /* VideoView_Model.swift in Sources */,
 				8552766C2A9FB11E0082BA75 /* AppDelegate.swift in Sources */,
 				85A7D18C2AA2B72900794801 /* DropboxService.swift in Sources */,
 				8503F1822AA274A9000F8461 /* AuthAssembly.swift in Sources */,
 				85A7D1AE2AA3EF5F00794801 /* MainContainerView.swift in Sources */,
 				85A7D1C92AA54B6100794801 /* DVButtonType.swift in Sources */,
+				855B5FF42AA7DD3D00F9F07A /* DVBaseMediaViewModel.swift in Sources */,
 				85A7D1992AA38CD400794801 /* MediaFile.swift in Sources */,
 				8503F17B2AA260C7000F8461 /* AuthViewController.swift in Sources */,
 				8503F19B2AA29AAD000F8461 /* AppCoordinatorAssembly.swift in Sources */,
 				85A7D1A12AA3A5CC00794801 /* MediaFilesViewModel.swift in Sources */,
 				85A7D1902AA3399400794801 /* AppConstants.swift in Sources */,
+				855B5FEE2AA7CF6D00F9F07A /* PDFAssembly.swift in Sources */,
+				855B5FF82AA7E78600F9F07A /* DVBaseMediaViewController.swift in Sources */,
+				855B5FFB2AA7E8DE00F9F07A /* VideoViewAssembly.swift in Sources */,
+				855B60012AA7EA0600F9F07A /* VideoView_ViewController.swift in Sources */,
 				850814DD2AA6A9AA006297BC /* ImageViewAssembly.swift in Sources */,
 				85A7D1AB2AA3A98600794801 /* MainFilesCellInfoView.swift in Sources */,
+				855B5FE82AA7CED700F9F07A /* PDFModel.swift in Sources */,
+				855B5FF22AA7DB5300F9F07A /* CustomError.swift in Sources */,
 				85A7D1A72AA3A8F900794801 /* MainFilesCellInfoModel.swift in Sources */,
+				855B5FFF2AA7E9E200F9F07A /* VideoView_ViewModel.swift in Sources */,
 				8503F18E2AA280C6000F8461 /* ViewState.swift in Sources */,
 				85A7D19F2AA393D600794801 /* DropboxServiceManager.swift in Sources */,
-				85A7D1BB2AA525EB00794801 /* DVViewController.swift in Sources */,
 				8552766E2A9FB11E0082BA75 /* SceneDelegate.swift in Sources */,
-				85A7D1C22AA5433700794801 /* FileViewersAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

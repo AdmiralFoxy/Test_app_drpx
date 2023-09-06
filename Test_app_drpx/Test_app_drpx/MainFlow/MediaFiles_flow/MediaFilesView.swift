@@ -106,6 +106,8 @@ private extension MediaFilesView {
     // MARK: subviews
     
     func setupPlaceholder() {
+        view.backgroundColor = .blue
+        
         view.addSubview(placeholderView)
         placeholderView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -118,6 +120,7 @@ private extension MediaFilesView {
             $0.top.bottom.equalToSuperview().inset(44.0)
             $0.leading.trailing.equalToSuperview().inset(16.0)
         }
+        collectionView.backgroundColor = .gray
     }
     
 }
