@@ -14,10 +14,10 @@ final class PDFModel: NavigationNode, DVBaseMediaModel {
     var viewButtonAction = PassthroughSubject<DVButtonType, Never>()
     var setDataAction = PassthroughSubject<Data, Never>()
     var viewState = CurrentValueSubject<ViewState, Never>(.idle)
+    var fileInfo = CurrentValueSubject<MediaFile?, Never>(nil)
     
     var dropboxService: DropboxServiceManager
     var filePath: FilePath
-    var fileInfo: MediaFile?
     
     private var cancellables = Set<AnyCancellable>()
     

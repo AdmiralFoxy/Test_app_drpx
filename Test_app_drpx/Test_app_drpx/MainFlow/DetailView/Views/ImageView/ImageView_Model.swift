@@ -14,10 +14,10 @@ final class ImageView_Model: NavigationNode, DVBaseMediaModel {
     var viewButtonAction: PassthroughSubject<DVButtonType, Never> = .init()
     var setDataAction: PassthroughSubject<Data, Never> = .init()
     var viewState: CurrentValueSubject<ViewState, Never> = .init(.idle)
+    var fileInfo = CurrentValueSubject<MediaFile?, Never>(nil)
     
     var dropboxService: DropboxServiceManager
     var filePath: FilePath
-    var fileInfo: MediaFile?
     
     private var cancellables = Set<AnyCancellable>()
     

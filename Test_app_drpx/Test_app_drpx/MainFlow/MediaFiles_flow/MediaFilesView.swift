@@ -61,6 +61,10 @@ final class MediaFilesView: UIViewController {
         setupUIView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.fetchMoreFilesAction.send(())
+    }
+    
 }
 
 // MARK: helper methods

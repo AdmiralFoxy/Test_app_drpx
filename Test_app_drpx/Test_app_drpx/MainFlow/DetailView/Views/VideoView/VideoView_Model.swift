@@ -13,9 +13,9 @@ final class VideoView_Model: NavigationNode, DVBaseMediaModel {
     var viewButtonAction: PassthroughSubject<DVButtonType, Never> = .init()
     var setDataAction: PassthroughSubject<Data, Never> = .init()
     var viewState: CurrentValueSubject<ViewState, Never> = .init(.idle)
+    var fileInfo = CurrentValueSubject<MediaFile?, Never>(nil)
     
     var filePath: FilePath
-    var fileInfo: MediaFile?
     var dropboxService: DropboxServiceManager
     
     private var cancellables = Set<AnyCancellable>()

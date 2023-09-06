@@ -11,11 +11,8 @@ import UIKit
 
 final class DropboxServiceManager: DropboxServiceProtocol {
     
-    private let cursorSubject = CurrentValueSubject<String?, Never>(nil)
-    private let hasMoreSubject = CurrentValueSubject<Bool, Never>(true)
-    
-    private(set) var cursor: String?
-    private(set) var hasMore: Bool = true
+    let cursorSubject = CurrentValueSubject<String?, Never>(nil)
+    let hasMoreSubject = CurrentValueSubject<Bool, Never>(true)
     
     var authClient: DropboxClient? {
         DropboxClientsManager.authorizedClient
@@ -106,7 +103,7 @@ final class DropboxServiceManager: DropboxServiceProtocol {
                 self?.authClient?.files.getThumbnail(
                     path: path,
                     format: .jpeg,
-                    size: .w64h64,
+                    size: .w640h480,
                     mode: .bestfit
                 ).response { response, error in
                     if let (_, data) = response {
@@ -143,7 +140,7 @@ final class DropboxServiceManager: DropboxServiceProtocol {
 
     
     func hasMoreFiles() -> Bool {
-        return hasMore
+        return hasMoreSubject.value
     }
     
 }

@@ -13,9 +13,9 @@ protocol DVBaseMediaModel {
     var viewButtonAction: PassthroughSubject<DVButtonType, Never> { get }
     var setDataAction: PassthroughSubject<Data, Never> { get }
     var viewState: CurrentValueSubject<ViewState, Never> { get }
+    var fileInfo: CurrentValueSubject<MediaFile?, Never> { get }
     
     var filePath: FilePath { get set }
-    var fileInfo: MediaFile? { get set }
     var dropboxService: DropboxServiceManager { get set }
     
     func loadFileData(_ path: FilePath) -> AnyPublisher<Data, Error>
@@ -35,9 +35,11 @@ extension DVBaseMediaModel {
         
         return dropboxService.downloadFile(path: path.path)
             .flatMap { fileData -> AnyPublisher<Data, Error> in
-                if let data = fileData?.data {
-                    self.setDataAction.send(data)
-                    self.viewState.send(.onSuccess)
+                if let file = fileData, let data = fileData?.data {
+                    
+                    fileInfo.send(file)
+                    setDataAction.send(data)
+                    viewState.send(.onSuccess)
                     
                     return Just(data)
                         .setFailureType(to: Error.self)
@@ -45,7 +47,7 @@ extension DVBaseMediaModel {
                 } else {
                     let error = CustomError.unknownError
                     
-                    self.viewState.send(.onFailure(error.localizedDescription))
+                    viewState.send(.onFailure(error.localizedDescription))
                     return Fail(error: error)
                         .eraseToAnyPublisher()
                 }

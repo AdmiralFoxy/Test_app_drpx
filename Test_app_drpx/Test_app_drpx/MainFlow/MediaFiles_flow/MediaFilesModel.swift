@@ -42,7 +42,6 @@ final class MediaFilesModel: NavigationNode {
         super.init(parent: parent)
         
         setupBindings()
-        fetchMoreFilesAction.send(())
     }
     
 }
@@ -55,7 +54,7 @@ private extension MediaFilesModel {
     
     func setupBindings() {
         fetchMoreFilesAction
-            .sink(receiveValue: fetchMediaFiles)
+            .call(self, type(of: self).fetchMediaFiles)
             .store(in: &cancellables)
         
         cellTapAction
@@ -95,7 +94,6 @@ private extension MediaFilesModel {
         guard let result = response else {
             print("### Error fetching media files")
             viewState.send(.onFailure("Error fetching media files"))
-            
             return
         }
         

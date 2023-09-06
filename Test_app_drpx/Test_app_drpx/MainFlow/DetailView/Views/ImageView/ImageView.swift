@@ -126,7 +126,7 @@ extension ImageView: DVBaseMediaViewController {
     
     @objc
     func infoButtonPressed() {
-        guard let info = viewModel.fileInfo else { return }
+        guard let info = viewModel.fileInfo.value else { return }
         
         viewModel.viewButtonAction.send(.info(file: info))
     }
