@@ -18,6 +18,11 @@ final class DropboxServiceManager: DropboxServiceProtocol {
         DropboxClientsManager.authorizedClient
     }
     
+    func clearPaginationValues() {
+        cursorSubject.send(nil)
+        hasMoreSubject.send(true)
+    }
+    
     func downloadFile(path: String) -> AnyPublisher<MediaFile?, Error> {
         Deferred {
             Future<MediaFile?, Error> { [weak self] promise in
@@ -55,7 +60,7 @@ final class DropboxServiceManager: DropboxServiceProtocol {
     }
     
     func fetchNextPage() -> AnyPublisher<Files.ListFolderResult?, Error> {
-        Deferred {
+        return Deferred {
             Future<Files.ListFolderResult?, Error> { [weak self] promise in
                 guard let self = self else {
                     promise(.failure(CustomError.selfIsNil))
@@ -65,22 +70,37 @@ final class DropboxServiceManager: DropboxServiceProtocol {
                 let completion: (Files.ListFolderResult?, CallError<Files.ListFolderError>?, @escaping (Files.ListFolderResult?, Error?) -> Void) -> Void = { response, error, completion in
                     if let result = response {
                         self.cursorSubject.send(result.cursor)
+                        self.hasMoreSubject.send(result.hasMore)
                         completion(result, nil)
                     } else if let error = error {
+                        self.cursorSubject.send(nil)
+                        self.hasMoreSubject.send(false)
                         completion(nil, error as? Error)
                     }
                 }
                 
                 if let cursor = self.cursorSubject.value {
                     self.authClient?.files.listFolderContinue(cursor: cursor).response { response, error in
-                        completion(response, nil) { result, error in
-                            if let error = error {
-                                promise(.failure(error))
-                            } else {
-                                promise(.success(result))
+                        if let result = response {
+                            self.cursorSubject.send(result.cursor)
+                            self.hasMoreSubject.send(result.hasMore)
+                            
+                            completion(response, nil) { result, error in
+                                if let error = error {
+                                    promise(.failure(error))
+                                } else {
+                                    promise(.success(result))
+                                }
+                            }
+                        } else if let error = error {
+                            self.cursorSubject.send(nil)
+                            self.hasMoreSubject.send(false)
+                            completion(response, nil) { _, _ in
+                                promise(.failure(CustomError.unknownError))
                             }
                         }
                     }
+
                 } else {
                     self.authClient?.files.listFolder(path: "", limit: 6).response { response, error in
                         completion(response, nil) { result, error in
@@ -118,26 +138,6 @@ final class DropboxServiceManager: DropboxServiceProtocol {
         }
         .eraseToAnyPublisher()
     }
-    
-    private func processResult(
-        result: Files.ListFolderResult?,
-        initialError: CallError<Files.ListFolderError>?,
-        continueError: CallError<Files.ListFolderContinueError>?,
-        completion: ([Files.Metadata]?, Error?) -> Void
-    ) {
-        if let result = result {
-            self.cursorSubject.send(result.cursor)
-            self.hasMoreSubject.send(result.hasMore)
-            completion(result.entries, nil)
-        } else if let error = initialError {
-            completion(nil, error as? Error)
-        } else if let error = continueError {
-            completion(nil, error as? Error)
-        } else {
-            completion(nil, CustomError.unknownError)
-        }
-    }
-
     
     func hasMoreFiles() -> Bool {
         return hasMoreSubject.value

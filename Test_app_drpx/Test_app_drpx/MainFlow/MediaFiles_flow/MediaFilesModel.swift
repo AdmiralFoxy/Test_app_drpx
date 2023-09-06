@@ -24,9 +24,9 @@ final class MediaFilesModel: NavigationNode {
     let dropboxService: DropboxServiceManager
     let dropboxCacheService: DropboxCacheProtocol
     
+    private let cursorSubject = CurrentValueSubject<String?, Never>(nil)
+    private let hasMoreSubject = CurrentValueSubject<Bool, Never>(true)
     private(set) var loadFilesPubl: AnyPublisher<[Files.Metadata]?, Error>?
-    private var cursor: String?
-    private var hasMore = true
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: initialize
@@ -41,7 +41,12 @@ final class MediaFilesModel: NavigationNode {
         
         super.init(parent: parent)
         
+        dropboxService.clearPaginationValues()
         setupBindings()
+    }
+    
+    deinit {
+        dropboxService.clearPaginationValues()
     }
     
 }
@@ -60,6 +65,16 @@ private extension MediaFilesModel {
         cellTapAction
             .call(self, type(of: self).cellTapHandle)
             .store(in: &cancellables)
+        
+        dropboxService
+            .cursorSubject
+            .assign(to: \.value, on: cursorSubject)
+            .store(in: &cancellables)
+        
+        dropboxService
+            .hasMoreSubject
+            .assign(to: \.value, on: hasMoreSubject)
+            .store(in: &cancellables)
     }
     
     func cellTapHandle(path: FilePath) {
@@ -76,7 +91,7 @@ private extension MediaFilesModel {
     func fetchMediaFiles() {
         print("### Fetching media files started.")
         
-        if !hasMore {
+        if !hasMoreSubject.value {
             print("### No more files to fetch.")
             return
         }
@@ -101,8 +116,8 @@ private extension MediaFilesModel {
         print("### Result description: \(result.description)")
         print("### File paths: \(result.entries.map { $0.pathDisplay })")
         
-        self.cursor = result.cursor
-        self.hasMore = result.hasMore
+        cursorSubject.send(result.cursor)
+        hasMoreSubject.send(result.hasMore)
         
         let newFiles = result.entries.compactMap { entry in
             print("### Entry description: \(entry.description)")

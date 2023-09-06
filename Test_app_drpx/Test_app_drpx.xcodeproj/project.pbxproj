@@ -323,7 +323,6 @@
 				855B5FE72AA7CED700F9F07A /* PDFModel.swift */,
 				855B5FE92AA7CF1700F9F07A /* PDFViewModel.swift */,
 				855B5FEB2AA7CF2D00F9F07A /* PDFViewController.swift */,
-				855B5FED2AA7CF6D00F9F07A /* PDFAssembly.swift */,
 			);
 			path = PDFView;
 			sourceTree = "<group>";
@@ -331,7 +330,6 @@
 		855B5FF92AA7E8CC00F9F07A /* VideoView */ = {
 			isa = PBXGroup;
 			children = (
-				855B5FFA2AA7E8DE00F9F07A /* VideoViewAssembly.swift */,
 				855B5FFC2AA7E95000F9F07A /* VideoView_Model.swift */,
 				855B5FFE2AA7E9E200F9F07A /* VideoView_ViewModel.swift */,
 				855B60002AA7EA0600F9F07A /* VideoView_ViewController.swift */,
@@ -345,7 +343,6 @@
 				858BB2C82AA896AB00333DD6 /* FileInfoModel.swift */,
 				858BB2CB2AA896D100333DD6 /* FileInfoViewModel.swift */,
 				858BB2CD2AA8970900333DD6 /* FileInfoViewController.swift */,
-				858BB2CF2AA8985000333DD6 /* FileInfoAssembly.swift */,
 			);
 			path = FileInfo;
 			sourceTree = "<group>";
@@ -374,6 +371,17 @@
 				8597DEB32AA9363C004103A6 /* CacheUtility.swift */,
 			);
 			path = Cache;
+			sourceTree = "<group>";
+		};
+		8597DEB52AA9443F004103A6 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				855B5FFA2AA7E8DE00F9F07A /* VideoViewAssembly.swift */,
+				858BB2CF2AA8985000333DD6 /* FileInfoAssembly.swift */,
+				855B5FED2AA7CF6D00F9F07A /* PDFAssembly.swift */,
+				850814DC2AA6A9AA006297BC /* ImageViewAssembly.swift */,
+			);
+			path = Assembly;
 			sourceTree = "<group>";
 		};
 		85A7D18D2AA3397000794801 /* Assembly */ = {
@@ -472,9 +480,9 @@
 			children = (
 				855B5FEF2AA7D98800F9F07A /* DVBaseMediaModel.swift */,
 				855B5FF32AA7DD3D00F9F07A /* DVBaseMediaViewModel.swift */,
+				855B5FF72AA7E78600F9F07A /* DVBaseMediaViewController.swift */,
 				85A7D1C02AA5433000794801 /* Views */,
 				85A7D1BD2AA530CE00794801 /* Common */,
-				855B5FF72AA7E78600F9F07A /* DVBaseMediaViewController.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -492,6 +500,7 @@
 		85A7D1C02AA5433000794801 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8597DEB52AA9443F004103A6 /* Assembly */,
 				858BB2CA2AA896C700333DD6 /* FileInfo */,
 				855B5FF92AA7E8CC00F9F07A /* VideoView */,
 				855B5FE62AA7CEC500F9F07A /* PDFView */,
@@ -506,7 +515,6 @@
 				85A7D1C42AA5441700794801 /* ImageView.swift */,
 				85A7D1CC2AA54C3600794801 /* ImageViewModel.swift */,
 				85A7D1CE2AA54C5A00794801 /* ImageView_Model.swift */,
-				850814DC2AA6A9AA006297BC /* ImageViewAssembly.swift */,
 			);
 			path = ImageView;
 			sourceTree = "<group>";

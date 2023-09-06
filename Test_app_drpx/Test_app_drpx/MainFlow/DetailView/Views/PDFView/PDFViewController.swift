@@ -82,7 +82,9 @@ final class PDFViewController: UIViewController, DVBaseMediaViewController {
     
     @objc
     func infoButtonPressed() {
-//        viewModel.viewButtonAction.send(.info(path: viewModel.filePath))
+        guard let info = viewModel.fileInfo.value else { return }
+        
+        viewModel.viewButtonAction.send(.info(file: info))
     }
     
 }
@@ -141,15 +143,15 @@ extension PDFViewController {
             $0.leading.equalToSuperview().inset(24.0)
             $0.top.equalToSuperview().inset(54.0)
         }
+        closeButton.backgroundColor = .gray
         
         view.addSubview(infoButton)
         infoButton.snp.makeConstraints {
-            $0.center.equalTo(closeButton.snp.center)
+            $0.width.height.equalTo(40.0)
+            $0.top.equalToSuperview().inset(54.0)
             $0.trailing.equalToSuperview().inset(24.0)
         }
-        
-        closeButton.backgroundColor = .red
-        infoButton.backgroundColor = .red
+        infoButton.backgroundColor = .lightGray
     }
     
     func setupDetailsView(data value: Data) {

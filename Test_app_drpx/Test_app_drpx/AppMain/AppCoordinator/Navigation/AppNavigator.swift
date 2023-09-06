@@ -86,6 +86,8 @@ extension AppCoordinator {
         VideoViewAssembly().assemble(container: container)
         ImageViewAssembly().assemble(container: container)
         FileDetailAssembly().assemble(container: container)
+        PDFAssembly().assemble(container: container)
+        VideoViewAssembly().assemble(container: container)
     }
     
     private func setupHandler() {
@@ -135,26 +137,34 @@ extension AppCoordinator {
     private func navigateToImageView(filePath: FilePath) {
         let dropboxService = container.resolve(DropboxServiceManager.self)!
         
-        if let vc: ImageView = container.resolve(ImageView.self, arguments: filePath, dropboxService) {
+        if let vc: ImageView = container.resolve(
+            ImageView.self,
+            arguments: filePath,
+            dropboxService
+        ) {
             switchTo(vc)
         }
     }
     
     private func navigateToPDFView(filePath: FilePath) {
+        let service = container.resolve(DropboxServiceManager.self)!
+        
         if let vc: PDFViewController = container.resolve(
             PDFViewController.self,
             arguments: filePath,
-            container.resolve(DropboxServiceManager.self)
+            service
         ) {
             switchTo(vc)
         }
     }
     
     private func navigateToVideoView(filePath: FilePath) {
+        let service = container.resolve(DropboxServiceManager.self)!
+        
         if let vc: VideoView_ViewController = container.resolve(
             VideoView_ViewController.self,
-            arguments: filePath.path,
-            container.resolve(DropboxServiceManager.self)
+            arguments: filePath,
+            service
         ) {
             switchTo(vc)
         }

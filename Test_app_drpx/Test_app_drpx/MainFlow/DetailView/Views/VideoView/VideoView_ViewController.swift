@@ -11,6 +11,9 @@ import AVKit
 
 final class VideoView_ViewController: UIViewController, DVBaseMediaViewController {
     
+    private let playerViewController = AVPlayerViewController()
+    private var player: AVPlayer?
+    
     private var cancellables = Set<AnyCancellable>()
     
     private lazy var closeButton: UIButton = {
@@ -57,6 +60,13 @@ final class VideoView_ViewController: UIViewController, DVBaseMediaViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addChild(playerViewController)
+        view.addSubview(playerViewController.view)
+        playerViewController.view.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        playerViewController.didMove(toParent: self)
+        
         setupBindings()
         setupView()
     }
@@ -75,7 +85,9 @@ final class VideoView_ViewController: UIViewController, DVBaseMediaViewControlle
     
     @objc
     func infoButtonPressed() {
-//        viewModel.viewButtonAction.send(.info(path: viewModel.filePath))
+        guard let info = viewModel.fileInfo.value else { return }
+        
+        viewModel.viewButtonAction.send(.info(file: info))
     }
     
     func setupBindings() {
@@ -96,29 +108,25 @@ final class VideoView_ViewController: UIViewController, DVBaseMediaViewControlle
         switch viewState {
         case .loading:
             activityIndicator.startAnimating()
-//            pdfView.isHidden = true
-//
+            playerViewController.view.isHidden = true
+            
         case .idle:
             activityIndicator.stopAnimating()
-//            pdfView.isHidden = false
+            playerViewController.view.isHidden = true
             
         case .onSuccess:
             activityIndicator.stopAnimating()
-//            pdfView.isHidden = false
+            playerViewController.view.isHidden = false
+            player?.play()
             
         case .onFailure(let string):
+            playerViewController.view.isHidden = true
             activityIndicator.stopAnimating()
-//            pdfView.isHidden = true
             showErrorAlert(with: string)
         }
     }
     
     func setupView() {
-//        view.addSubview(pdfView)
-//        pdfView.snp.makeConstraints {
-//            $0.edges.equalToSuperview()
-//        }
-        
         view.addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -130,15 +138,15 @@ final class VideoView_ViewController: UIViewController, DVBaseMediaViewControlle
             $0.leading.equalToSuperview().inset(24.0)
             $0.top.equalToSuperview().inset(54.0)
         }
+        closeButton.backgroundColor = .gray
         
         view.addSubview(infoButton)
         infoButton.snp.makeConstraints {
-            $0.center.equalTo(closeButton.snp.center)
+            $0.width.height.equalTo(40.0)
+            $0.top.equalToSuperview().inset(54.0)
             $0.trailing.equalToSuperview().inset(24.0)
         }
-        
-        closeButton.backgroundColor = .red
-        infoButton.backgroundColor = .red
+        infoButton.backgroundColor = .lightGray
     }
     
     func setupDetailsView(data value: Data) {
@@ -153,14 +161,9 @@ final class VideoView_ViewController: UIViewController, DVBaseMediaViewControlle
             
             let asset = AVAsset(url: temporaryFileURL)
             let playerItem = AVPlayerItem(asset: asset)
-            let player = AVPlayer(playerItem: playerItem)
-            let playerViewController = AVPlayerViewController()
+            player = AVPlayer(playerItem: playerItem)
             
             playerViewController.player = player
-            
-            present(playerViewController, animated: true) {
-                playerViewController.player!.play()
-            }
             
             viewModel.viewState.send(.onSuccess)
         } catch {
