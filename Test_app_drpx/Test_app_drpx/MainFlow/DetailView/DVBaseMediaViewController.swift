@@ -9,6 +9,8 @@ import Foundation
 
 protocol DVControllerSetup {
     
+    // MARK: DVControllerSetup properties
+    
     func setupView()
     func setupBindings()
     func handleViewState(_ state: ViewState)
@@ -17,6 +19,8 @@ protocol DVControllerSetup {
 
 protocol DVButtonsAction {
     
+    // MARK: DVButtonsAction properties
+    
     func closeButtonPressed()
     func infoButtonPressed()
     
@@ -24,10 +28,13 @@ protocol DVButtonsAction {
 
 protocol DVBaseMediaViewController: DVControllerSetup & DVButtonsAction {
     
+    // MARK: DVBaseMediaViewController properties
+    
     var viewModel: DVBaseMediaViewModel { get }
     
-    init(viewModel: DVBaseMediaViewModel)
+    // MARK: initialize
     
+    init(viewModel: DVBaseMediaViewModel)
     
     func setupDetailsView(data value: Data)
     func showErrorAlert(with message: String)

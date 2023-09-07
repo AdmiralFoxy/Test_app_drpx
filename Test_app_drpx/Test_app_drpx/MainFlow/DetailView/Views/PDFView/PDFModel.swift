@@ -11,6 +11,8 @@ import Combine
 
 final class PDFModel: NavigationNode, DVBaseMediaModel {
     
+    // MARK: properties
+    
     var viewButtonAction = PassthroughSubject<DVButtonType, Never>()
     var setDataAction = PassthroughSubject<Data, Never>()
     var viewState = CurrentValueSubject<ViewState, Never>(.idle)
@@ -20,6 +22,8 @@ final class PDFModel: NavigationNode, DVBaseMediaModel {
     var filePath: FilePath
     
     private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: initialize
     
     init(
         parent: NavigationNode?,
@@ -35,6 +39,8 @@ final class PDFModel: NavigationNode, DVBaseMediaModel {
     }
     
 }
+
+// MARK: setup bindings
 
 private extension PDFModel {
     

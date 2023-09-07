@@ -10,7 +10,11 @@ import Combine
 
 final class PDFViewModel: DVBaseMediaViewModel {
     
+    // MARK: properties
+    
     var model: DVBaseMediaModel
+    
+    // MARK: initialize
     
     init(model: DVBaseMediaModel) {
         self.model = model

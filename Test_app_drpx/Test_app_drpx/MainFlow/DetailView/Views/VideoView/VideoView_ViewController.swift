@@ -11,10 +11,16 @@ import AVKit
 
 final class VideoView_ViewController: UIViewController, DVBaseMediaViewController {
     
-    private let playerViewController = AVPlayerViewController()
-    private var player: AVPlayer?
+    // MARK: properties
     
+    var viewModel: DVBaseMediaViewModel
+    
+    private let playerViewController = AVPlayerViewController()
+    
+    private var player: AVPlayer?
     private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - subview
     
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -45,7 +51,7 @@ final class VideoView_ViewController: UIViewController, DVBaseMediaViewControlle
         return button
     }()
     
-    var viewModel: DVBaseMediaViewModel
+    // MARK: initialize
     
     init(viewModel: DVBaseMediaViewModel) {
         self.viewModel = viewModel
@@ -60,71 +66,16 @@ final class VideoView_ViewController: UIViewController, DVBaseMediaViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addChild(playerViewController)
-        view.addSubview(playerViewController.view)
-        playerViewController.view.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        playerViewController.didMove(toParent: self)
-        
+        setupPlayerView()
         setupBindings()
         setupView()
     }
     
-    func showErrorAlert(with message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    @objc
-    func closeButtonPressed() {
-        viewModel.viewButtonAction.send(.close)
-    }
-    
-    @objc
-    func infoButtonPressed() {
-        guard let info = viewModel.fileInfo.value else { return }
-        
-        viewModel.viewButtonAction.send(.info(file: info))
-    }
-    
-    func setupBindings() {
-        viewModel.viewState
-            .receive(on: RunLoop.main)
-            .call(self, type(of: self).handleViewState)
-            .store(in: &cancellables)
-        
-        viewModel.setDataAction
-            .receive(on: RunLoop.main)
-            .call(self, type(of: self).setupDetailsView)
-            .store(in: &cancellables)
-    }
-    
-    
-    
-    func handleViewState(_ viewState: ViewState) {
-        switch viewState {
-        case .loading:
-            activityIndicator.startAnimating()
-            playerViewController.view.isHidden = true
-            
-        case .idle:
-            activityIndicator.stopAnimating()
-            playerViewController.view.isHidden = true
-            
-        case .onSuccess:
-            activityIndicator.stopAnimating()
-            playerViewController.view.isHidden = false
-            player?.play()
-            
-        case .onFailure(let string):
-            playerViewController.view.isHidden = true
-            activityIndicator.stopAnimating()
-            showErrorAlert(with: string)
-        }
-    }
+}
+
+// MARK: - setup view, subviews, bindings
+
+extension VideoView_ViewController {
     
     func setupView() {
         view.addSubview(activityIndicator)
@@ -170,6 +121,74 @@ final class VideoView_ViewController: UIViewController, DVBaseMediaViewControlle
             showErrorAlert(
                 with: "Unable to write data to file: \(error.localizedDescription)"
             )
+        }
+    }
+    
+    func setupPlayerView() {
+        addChild(playerViewController)
+        view.addSubview(playerViewController.view)
+        playerViewController.view.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        playerViewController.didMove(toParent: self)
+    }
+    
+    func setupBindings() {
+        viewModel.viewState
+            .receive(on: RunLoop.main)
+            .call(self, type(of: self).handleViewState)
+            .store(in: &cancellables)
+        
+        viewModel.setDataAction
+            .receive(on: RunLoop.main)
+            .call(self, type(of: self).setupDetailsView)
+            .store(in: &cancellables)
+    }
+    
+}
+
+// MARK: - helper methods
+
+extension VideoView_ViewController {
+    
+    func showErrorAlert(with message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @objc
+    func closeButtonPressed() {
+        viewModel.viewButtonAction.send(.close)
+    }
+    
+    @objc
+    func infoButtonPressed() {
+        guard let info = viewModel.fileInfo.value else { return }
+        
+        viewModel.viewButtonAction.send(.info(file: info))
+    }
+    
+    func handleViewState(_ viewState: ViewState) {
+        switch viewState {
+        case .loading:
+            activityIndicator.startAnimating()
+            playerViewController.view.isHidden = true
+            
+        case .idle:
+            activityIndicator.stopAnimating()
+            playerViewController.view.isHidden = true
+            
+        case .onSuccess:
+            activityIndicator.stopAnimating()
+            playerViewController.view.isHidden = false
+            player?.play()
+            
+        case .onFailure(let string):
+            playerViewController.view.isHidden = true
+            activityIndicator.stopAnimating()
+            showErrorAlert(with: string)
         }
     }
     

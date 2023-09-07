@@ -9,47 +9,16 @@ import Foundation
 import UIKit
 import Swinject
 
-enum DetailViewEvents: NavigationEvent {
-    
-    case showImage(filePath: FilePath)
-    case showPDF(filePath: FilePath)
-    case showVideo(filePath: FilePath)
-    
-    static func getDetailViewEvent(for path: FilePath) -> DetailViewEvents? {
-        let formattedPath = path.path.replacingOccurrences(of: " ", with: "%20")
-        guard let fileExtension = URL(string: formattedPath)?.pathExtension.lowercased() else {
-            return nil
-        }
-        
-        switch fileExtension {
-        case "jpg", "jpeg", "png":
-            return .showImage(filePath: path)
-        case "pdf":
-            return .showPDF(filePath: path)
-        case "mp4", "mov", "avi":
-            return .showVideo(filePath: path)
-        default:
-            return nil
-        }
-    }
-    
-}
-
-
-enum AppMainEvents: NavigationEvent {
-    
-    case auth
-    case mainFiles
-    case infoView(file: MediaFile)
-    
-}
-
 final class AppCoordinator: NavigationNode {
+    
+    // MARK: - properties
     
     let window: UIWindow
     let container: Container
     
     var containerViewController: MainContainerView?
+    
+    // MARK: - initialize
     
     init(window: UIWindow) {
         self.window = window
@@ -57,10 +26,7 @@ final class AppCoordinator: NavigationNode {
         
         super.init(parent: nil)
         
-        container.register(NavigationNode.self) { _ in return self}
-        
-        assemblyRegistr()
-        setupHandler()
+        setupCoordinator()
     }
     
     func postInit() {
@@ -72,13 +38,21 @@ final class AppCoordinator: NavigationNode {
         
         raise(event: AppMainEvents.auth)
     }
+    
 }
 
-// MARK: - event methods
+// MARK: - setup coordinator
 
-extension AppCoordinator {
+private extension AppCoordinator {
     
-    private func assemblyRegistr() {
+    func setupCoordinator() {
+        container.register(NavigationNode.self) { _ in return self}
+        
+        assemblyRegistr()
+        setupHandler()
+    }
+    
+    func assemblyRegistr() {
         AppSingletoneAssembly().assemble(container: container)
         MainContainerAssembly().assemble(container: container)
         AuthAssembly().assemble(container: container)
@@ -122,7 +96,13 @@ extension AppCoordinator {
         }
     }
     
-    private func navigateToInfoView(for fileDetail: MediaFile) {
+}
+
+// MARK: - navigate methods
+
+private extension AppCoordinator {
+    
+    func navigateToInfoView(for fileDetail: MediaFile) {
         let parent = container.resolve(NavigationNode.self)!
         
         if let vc: FileInfoViewController = container.resolve(
@@ -134,7 +114,7 @@ extension AppCoordinator {
         }
     }
     
-    private func navigateToImageView(filePath: FilePath) {
+    func navigateToImageView(filePath: FilePath) {
         let dropboxService = container.resolve(DropboxServiceManager.self)!
         
         if let vc: ImageView = container.resolve(
@@ -146,7 +126,7 @@ extension AppCoordinator {
         }
     }
     
-    private func navigateToPDFView(filePath: FilePath) {
+    func navigateToPDFView(filePath: FilePath) {
         let service = container.resolve(DropboxServiceManager.self)!
         
         if let vc: PDFViewController = container.resolve(
@@ -158,7 +138,7 @@ extension AppCoordinator {
         }
     }
     
-    private func navigateToVideoView(filePath: FilePath) {
+    func navigateToVideoView(filePath: FilePath) {
         let service = container.resolve(DropboxServiceManager.self)!
         
         if let vc: VideoView_ViewController = container.resolve(
@@ -170,19 +150,25 @@ extension AppCoordinator {
         }
     }
     
-    private func navigateToAuth() {
+    func navigateToAuth() {
         if let vc: AuthViewController = container.resolve(AuthViewController.self) {
             switchTo(UINavigationController(rootViewController: vc))
         }
     }
     
-    private func navigateToMain() {
+    func navigateToMain() {
         if let vc: MediaFilesView = container.resolve(MediaFilesView.self) {
             switchTo(UINavigationController(rootViewController: vc))
         }
     }
     
-    private func switchTo(_ viewController: UIViewController) {
+}
+
+// MARK: - helper methods
+
+private extension AppCoordinator {
+    
+    func switchTo(_ viewController: UIViewController) {
         guard let containerViewController = containerViewController else { return }
         
         let oldVC = containerViewController.children.first

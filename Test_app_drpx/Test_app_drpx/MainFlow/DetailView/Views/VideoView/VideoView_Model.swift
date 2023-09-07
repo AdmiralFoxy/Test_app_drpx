@@ -10,6 +10,8 @@ import UIKit
 
 final class VideoView_Model: NavigationNode, DVBaseMediaModel {
     
+    // MARK: properties
+    
     var viewButtonAction: PassthroughSubject<DVButtonType, Never> = .init()
     var setDataAction: PassthroughSubject<Data, Never> = .init()
     var viewState: CurrentValueSubject<ViewState, Never> = .init(.idle)
@@ -19,6 +21,8 @@ final class VideoView_Model: NavigationNode, DVBaseMediaModel {
     var dropboxService: DropboxServiceProtocol
     
     private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: initialize
     
     init(
         parent: NavigationNode?,
@@ -34,6 +38,8 @@ final class VideoView_Model: NavigationNode, DVBaseMediaModel {
     }
     
 }
+
+// MARK: setup bindings
 
 extension VideoView_Model {
     

@@ -10,6 +10,8 @@ import Combine
 
 protocol DVBaseMediaModel {
     
+    // MARK: - properties
+    
     var viewButtonAction: PassthroughSubject<DVButtonType, Never> { get }
     var setDataAction: PassthroughSubject<Data, Never> { get }
     var viewState: CurrentValueSubject<ViewState, Never> { get }
@@ -20,6 +22,8 @@ protocol DVBaseMediaModel {
     
     func loadFileData(_ path: FilePath) -> AnyPublisher<Data, Error>
     
+    // MARK: initialize
+    
     init(
         parent: NavigationNode?,
         path: FilePath,
@@ -27,6 +31,8 @@ protocol DVBaseMediaModel {
     )
     
 }
+
+// MARK: - setup load file data method
 
 extension DVBaseMediaModel {
     

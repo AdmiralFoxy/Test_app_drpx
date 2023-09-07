@@ -12,7 +12,13 @@ import Combine
 
 final class PDFViewController: UIViewController, DVBaseMediaViewController {
     
+    // MARK: properties
+    
+    var viewModel: DVBaseMediaViewModel
+    
     private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - subviews
     
     private lazy var pdfView: PDFView = {
         let view = PDFView()
@@ -49,7 +55,7 @@ final class PDFViewController: UIViewController, DVBaseMediaViewController {
         return button
     }()
     
-    var viewModel: DVBaseMediaViewModel
+    // MARK: initialize
     
     init(viewModel: DVBaseMediaViewModel) {
         self.viewModel = viewModel
@@ -67,6 +73,10 @@ final class PDFViewController: UIViewController, DVBaseMediaViewController {
         setupBindings()
         setupView()
     }
+    
+}
+
+extension PDFViewController {
     
     func showErrorAlert(with message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
@@ -86,10 +96,6 @@ final class PDFViewController: UIViewController, DVBaseMediaViewController {
         
         viewModel.viewButtonAction.send(.info(file: info))
     }
-    
-}
-
-extension PDFViewController {
     
     func setupBindings() {
         viewModel.viewState

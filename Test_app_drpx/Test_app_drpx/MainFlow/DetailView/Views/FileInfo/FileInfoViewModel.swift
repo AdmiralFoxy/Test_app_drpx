@@ -10,6 +10,8 @@ import Combine
 
 final class FileInfoViewModel {
     
+    // MARK: - properties
+    
     var closeButtonAction: PassthroughSubject<Void, Never> {
         model.closeButtonAction
     }
@@ -19,6 +21,8 @@ final class FileInfoViewModel {
     }
     
     private let model: FileInfoModel
+    
+    // MARK: initialize
     
     init(model: FileInfoModel) {
         self.model = model

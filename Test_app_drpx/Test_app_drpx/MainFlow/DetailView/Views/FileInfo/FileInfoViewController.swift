@@ -9,6 +9,8 @@ import UIKit
 
 final class FileInfoViewController: UIViewController {
     
+    // MARK: - subviews
+    
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Close", for: .normal)
@@ -21,15 +23,9 @@ final class FileInfoViewController: UIViewController {
         return button
     }()
     
-    var viewModel: FileInfoViewModel!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .black
-        title = "File Details"
-        
+    private lazy var detailsLabel: UILabel = {
         let detailsLabel = UILabel()
+        
         detailsLabel.numberOfLines = 0
         detailsLabel.translatesAutoresizingMaskIntoConstraints = false
         detailsLabel.textColor = .white
@@ -43,6 +39,30 @@ final class FileInfoViewController: UIViewController {
         Is Downloadable: \(viewModel.fileDetail.isDownloadable ?? false ? "Yes" : "No")
         Size: \(String(describing: viewModel.fileDetail.size)) bytes
         """
+        
+        return detailsLabel
+    }()
+    
+    // MARK: properties
+    
+    var viewModel: FileInfoViewModel!
+    
+    // MARK: initialize
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupView()
+    }
+    
+}
+
+private extension FileInfoViewController {
+    
+    // MARK: setup view
+    
+    func setupView() {
+        view.backgroundColor = .black
         
         view.addSubview(detailsLabel)
         detailsLabel.snp.makeConstraints {
@@ -58,6 +78,8 @@ final class FileInfoViewController: UIViewController {
             $0.top.equalToSuperview().inset(54.0)
         }
     }
+    
+    // MARK: action
     
     @objc
     func closeButtonPressed() {

@@ -9,7 +9,11 @@ import Foundation
 
 final class VideoView_ViewModel: DVBaseMediaViewModel {
     
+    // MARK: properties
+    
     var model: DVBaseMediaModel
+    
+    // MARK: initialize
     
     init(model: DVBaseMediaModel) {
         self.model = model

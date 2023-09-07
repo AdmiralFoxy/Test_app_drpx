@@ -10,10 +10,14 @@ import Combine
 
 final class FileInfoModel: NavigationNode {
     
+    // MARK: - properties
+    
     let closeButtonAction: PassthroughSubject<Void, Never> = .init()
     let fileDetail: MediaFile
     
     private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: initialize
     
     init(parent: NavigationNode?, fileDetail: MediaFile) {
         self.fileDetail = fileDetail
@@ -24,6 +28,8 @@ final class FileInfoModel: NavigationNode {
     }
     
 }
+
+// MARK: setup view bindings
 
 private extension FileInfoModel {
     

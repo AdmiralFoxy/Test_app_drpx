@@ -53,6 +53,8 @@
 		8597DEBB2AA95069004103A6 /* CombineExpectations in Frameworks */ = {isa = PBXBuildFile; productRef = 8597DEBA2AA95069004103A6 /* CombineExpectations */; };
 		8597DEBD2AA9591F004103A6 /* MediaFilesModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEBC2AA9591F004103A6 /* MediaFilesModelTests.swift */; };
 		8597DEBF2AA9598B004103A6 /* DropboxCacheServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEBE2AA9598B004103A6 /* DropboxCacheServiceMock.swift */; };
+		8597DEC22AA96E7E004103A6 /* DetailViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEC12AA96E7E004103A6 /* DetailViewEvents.swift */; };
+		8597DEC42AA96E8F004103A6 /* AppMainEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEC32AA96E8F004103A6 /* AppMainEvents.swift */; };
 		85A7D18C2AA2B72900794801 /* DropboxService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D18B2AA2B72900794801 /* DropboxService.swift */; };
 		85A7D1902AA3399400794801 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D18F2AA3399400794801 /* AppConstants.swift */; };
 		85A7D1932AA33D6100794801 /* Publisher+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1922AA33D6100794801 /* Publisher+Ext.swift */; };
@@ -137,6 +139,8 @@
 		8597DEB72AA94C4B004103A6 /* DropboxServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxServiceMock.swift; sourceTree = "<group>"; };
 		8597DEBC2AA9591F004103A6 /* MediaFilesModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaFilesModelTests.swift; sourceTree = "<group>"; };
 		8597DEBE2AA9598B004103A6 /* DropboxCacheServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxCacheServiceMock.swift; sourceTree = "<group>"; };
+		8597DEC12AA96E7E004103A6 /* DetailViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewEvents.swift; sourceTree = "<group>"; };
+		8597DEC32AA96E8F004103A6 /* AppMainEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMainEvents.swift; sourceTree = "<group>"; };
 		85A7D18B2AA2B72900794801 /* DropboxService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxService.swift; sourceTree = "<group>"; };
 		85A7D18F2AA3399400794801 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		85A7D1922AA33D6100794801 /* Publisher+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Ext.swift"; sourceTree = "<group>"; };
@@ -261,6 +265,7 @@
 		8503F19C2AA29C2F000F8461 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				8597DEC02AA96E6E004103A6 /* Events */,
 				8503F1972AA298C8000F8461 /* AppNavigator.swift */,
 				858BB2D12AA8A09A00333DD6 /* Common */,
 				850814DE2AA6AF17006297BC /* Helper */,
@@ -401,6 +406,15 @@
 				8597DEBE2AA9598B004103A6 /* DropboxCacheServiceMock.swift */,
 			);
 			path = Mock;
+			sourceTree = "<group>";
+		};
+		8597DEC02AA96E6E004103A6 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				8597DEC12AA96E7E004103A6 /* DetailViewEvents.swift */,
+				8597DEC32AA96E8F004103A6 /* AppMainEvents.swift */,
+			);
+			path = Events;
 			sourceTree = "<group>";
 		};
 		85A7D18D2AA3397000794801 /* Assembly */ = {
@@ -691,6 +705,7 @@
 				8503F17D2AA260D9000F8461 /* AuthViewModel.swift in Sources */,
 				85A7D1B22AA3F06B00794801 /* MainContainerAssembly.swift in Sources */,
 				855B5FEA2AA7CF1700F9F07A /* PDFViewModel.swift in Sources */,
+				8597DEC42AA96E8F004103A6 /* AppMainEvents.swift in Sources */,
 				85A7D1BF2AA530D600794801 /* FileType.swift in Sources */,
 				85A7D1C52AA5441700794801 /* ImageView.swift in Sources */,
 				8503F1982AA298C8000F8461 /* AppNavigator.swift in Sources */,
@@ -719,6 +734,7 @@
 				855B5FEE2AA7CF6D00F9F07A /* PDFAssembly.swift in Sources */,
 				855B5FF82AA7E78600F9F07A /* DVBaseMediaViewController.swift in Sources */,
 				855B5FFB2AA7E8DE00F9F07A /* VideoViewAssembly.swift in Sources */,
+				8597DEC22AA96E7E004103A6 /* DetailViewEvents.swift in Sources */,
 				855B60012AA7EA0600F9F07A /* VideoView_ViewController.swift in Sources */,
 				850814DD2AA6A9AA006297BC /* ImageViewAssembly.swift in Sources */,
 				85A7D1AB2AA3A98600794801 /* MainFilesCellInfoView.swift in Sources */,

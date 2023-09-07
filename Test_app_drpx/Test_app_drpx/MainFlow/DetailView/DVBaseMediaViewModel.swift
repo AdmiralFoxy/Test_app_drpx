@@ -10,6 +10,8 @@ import Combine
 
 protocol DVBaseMediaViewModel {
     
+    // MARK: - properties
+    
     var setDataAction: PassthroughSubject<Data, Never> { get }
     var viewState: CurrentValueSubject<ViewState, Never> { get }
     var viewButtonAction: PassthroughSubject<DVButtonType, Never> { get }
@@ -18,9 +20,13 @@ protocol DVBaseMediaViewModel {
     var filePath: FilePath { get }
     var model: DVBaseMediaModel { get set }
     
+    // MARK: initialize
+    
     init(model: DVBaseMediaModel)
     
 }
+
+// MARK: - setup view model properties
 
 extension DVBaseMediaViewModel {
     
