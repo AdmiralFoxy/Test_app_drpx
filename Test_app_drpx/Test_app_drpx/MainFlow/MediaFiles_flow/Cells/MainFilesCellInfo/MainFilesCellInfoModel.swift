@@ -11,8 +11,8 @@ import UIKit
 final class MainFilesCellInfoModel {
     
     let cellTapAction: PassthroughSubject<FilePath, Never>
-    let moveFileAction: PassthroughSubject<Void, Never>
-    let deleteFileAction: PassthroughSubject<Void, Never>
+    let moveFileAction: PassthroughSubject<FilePath, Never>
+    let deleteFileAction: PassthroughSubject<FilePath, Never>
     
     let setImgPreviewAction = PassthroughSubject<UIImage, Never>()
     let cancelImgLoadingAction = PassthroughSubject<Void, Never>()
@@ -29,8 +29,8 @@ final class MainFilesCellInfoModel {
         title: String,
         filePath: String,
         cellTapAction: PassthroughSubject<FilePath, Never>,
-        moveFileAction: PassthroughSubject<Void, Never>,
-        deleteFileAction: PassthroughSubject<Void, Never>,
+        moveFileAction: PassthroughSubject<FilePath, Never>,
+        deleteFileAction: PassthroughSubject<FilePath, Never>,
         cacheDropboxService: DropboxCacheProtocol
     ) {
         self.cellTapAction = cellTapAction

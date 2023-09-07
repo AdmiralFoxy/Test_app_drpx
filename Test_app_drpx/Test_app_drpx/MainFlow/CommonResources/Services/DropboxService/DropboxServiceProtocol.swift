@@ -20,5 +20,7 @@ protocol DropboxServiceProtocol {
     func authorizeFromController(controller: UIViewController)
     func hasMoreFiles() -> Bool
     func clearPaginationValues()
+    func deleteFile(path: String) -> AnyPublisher<Void, Error>
+    func moveFile(fromPath: String, toPath: String) -> AnyPublisher<Void, Error>
     
 }

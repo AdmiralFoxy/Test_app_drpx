@@ -10,5 +10,11 @@ import Foundation
 struct FilePath {
     
     let path: String
+    let oldPath: String?
+    
+    init(path: String, oldPath: String? = nil) {
+        self.path = path
+        self.oldPath = oldPath
+    }
     
 }

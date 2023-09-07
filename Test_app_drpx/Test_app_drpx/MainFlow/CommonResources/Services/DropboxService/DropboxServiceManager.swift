@@ -107,7 +107,7 @@ final class DropboxServiceManager: DropboxServiceProtocol {
                             }
                         }
                     }
-
+                    
                 } else {
                     self.authClient?.files.listFolder(path: "", limit: 6).response { response, error in
                         completion(response, nil) { result, error in
@@ -138,6 +138,38 @@ final class DropboxServiceManager: DropboxServiceProtocol {
                         
                     } else if let error = error {
                         print("Error downloading preview: \(error)")
+                        promise(.failure(error as? Error ?? CustomError.unknownError))
+                    }
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func deleteFile(path: String) -> AnyPublisher<Void, Error> {
+        Deferred {
+            Future<Void, Error> { [weak self] promise in
+                self?.authClient?.files.deleteV2(path: path).response { response, error in
+                    if let _ = response {
+                        promise(.success(()))
+                    } else if let error = error {
+                        print("Error deleting file: \(error)")
+                        promise(.failure(error as? Error ?? CustomError.unknownError))
+                    }
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func moveFile(fromPath: String, toPath: String) -> AnyPublisher<Void, Error> {
+        Deferred {
+            Future<Void, Error> { [weak self] promise in
+                self?.authClient?.files.moveV2(fromPath: fromPath, toPath: toPath).response { response, error in
+                    if let _ = response {
+                        promise(.success(()))
+                    } else if let error = error {
+                        print("Error moving file: \(error)")
                         promise(.failure(error as? Error ?? CustomError.unknownError))
                     }
                 }

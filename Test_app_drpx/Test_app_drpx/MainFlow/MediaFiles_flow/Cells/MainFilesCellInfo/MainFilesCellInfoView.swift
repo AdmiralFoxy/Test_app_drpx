@@ -42,8 +42,34 @@ final class MainFilesCellInfoView: UICollectionViewCell {
         button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
         button.addTarget(self, action: #selector(didTapMenuButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        
         return button
     }()
+    
+    private lazy var menu: UIMenu = UIMenu(title: "", children: [
+        UIAction(
+            title: "Move",
+            image: UIImage(systemName: "arrowshape.turn.up.right")
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            let path = "random/path"
+            
+            self.viewModel.moveFileAction.send(FilePath(
+                path: path, oldPath: viewModel.filePath
+            ))
+        },
+        UIAction(
+            title: "Delete",
+            image: UIImage(systemName: "trash"),
+            attributes: .destructive
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            
+            self.viewModel.deleteFileAction.send(
+                FilePath(path: self.viewModel.filePath)
+            )
+        }
+    ])
     
     // MARK: - Initialization
     
@@ -86,6 +112,29 @@ final class MainFilesCellInfoView: UICollectionViewCell {
             .store(in: &cancellables)
     }
     
+    func presentFolderCreationAlert(controller: UIViewController, completion: @escaping (String?) -> Void) {
+        let alertController = UIAlertController(title: "Move your file", message: "Please enter the path for the new value`s folder", preferredStyle: .alert)
+        
+        alertController.addTextField { textField in
+            textField.placeholder = "new file path"
+        }
+        
+        let createAction = UIAlertAction(title: "Create", style: .default) { _ in
+            let folderPath = alertController.textFields?.first?.text
+            completion(folderPath)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            completion(nil)
+        }
+        
+        alertController.addAction(createAction)
+        alertController.addAction(cancelAction)
+        
+        controller.present(alertController, animated: true, completion: nil)
+    }
+
+    
     private func setupGestureRecognizers(for views: [UIView]) {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         
@@ -101,15 +150,7 @@ final class MainFilesCellInfoView: UICollectionViewCell {
     }
     
     @objc private func didTapMenuButton() {
-        let menu = UIMenu(title: "", children: [
-            UIAction(title: "Move", image: UIImage(systemName: "arrowshape.turn.up.right")) { [weak self] _ in
-                self?.viewModel.moveFileAction.send()
-            },
-            UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
-                self?.viewModel.deleteFileAction.send()
-            }
-        ])
-        menuButton.menu = menu
+        
         menuButton.showsMenuAsPrimaryAction = true
     }
     
@@ -140,6 +181,7 @@ final class MainFilesCellInfoView: UICollectionViewCell {
         }
         
         setupGestureRecognizers(for: [titleLabel, thumbnailImageView, backView])
+        menuButton.menu = menu
     }
     
     // MARK: - Configure View

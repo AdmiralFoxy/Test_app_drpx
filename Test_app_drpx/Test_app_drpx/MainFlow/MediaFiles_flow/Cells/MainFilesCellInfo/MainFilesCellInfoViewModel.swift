@@ -18,11 +18,11 @@ final class MainFilesCellInfoViewModel {
         model.cancelImgLoadingAction
     }
     
-    var moveFileAction: PassthroughSubject<Void, Never> {
+    var moveFileAction: PassthroughSubject<FilePath, Never> {
         model.moveFileAction
     }
     
-    var deleteFileAction: PassthroughSubject<Void, Never> {
+    var deleteFileAction: PassthroughSubject<FilePath, Never> {
         model.deleteFileAction
     }
     

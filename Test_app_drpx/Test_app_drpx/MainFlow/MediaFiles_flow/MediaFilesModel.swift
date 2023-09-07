@@ -18,8 +18,8 @@ final class MediaFilesModel: NavigationNode {
     let fetchMoreFilesAction = PassthroughSubject<Void, Never>()
     
     let cellTapAction = PassthroughSubject<FilePath, Never>()
-    let cellMoveFileAction = PassthroughSubject<Void, Never>()
-    let cellDeleteFileAction = PassthroughSubject<Void, Never>()
+    let cellMoveFileAction = PassthroughSubject<FilePath, Never>()
+    let cellDeleteFileAction = PassthroughSubject<FilePath, Never>()
     
     let dropboxService: DropboxServiceProtocol
     let dropboxCacheService: DropboxCacheProtocol
@@ -74,6 +74,15 @@ private extension MediaFilesModel {
         dropboxService
             .hasMoreSubjects
             .assign(to: \.value, on: hasMoreSubject)
+            .store(in: &cancellables)
+        
+        cellDeleteFileAction
+            .call(self, type(of: self).deleteFile)
+            .store(in: &cancellables)
+        
+        cellMoveFileAction
+            .map { ($0.oldPath, $0.path) }
+            .call(self, type(of: self).fileMove)
             .store(in: &cancellables)
     }
     
@@ -146,6 +155,28 @@ private extension MediaFilesModel {
         
         currentFiles.append(contentsOf: newFiles)
         mediaFiles.send(currentFiles)
+    }
+    
+    // MARK: file
+    
+    func deleteFile(_ path: FilePath) {
+        viewState.send(.loading)
+        
+        dropboxService
+            .deleteFile(path: path.path)
+            .call(self, type(of: self).fetchMediaFiles)
+            .store(in: &cancellables)
+    }
+    
+    func fileMove(value: (oldPath: String?, newPath: String)) {
+        guard let oldPath = value.oldPath else { return }
+        
+        viewState.send(.loading)
+        
+        dropboxService
+            .moveFile(fromPath: oldPath, toPath: value.newPath)
+            .call(self, type(of: self).fetchMediaFiles)
+            .store(in: &cancellables)
     }
     
 }

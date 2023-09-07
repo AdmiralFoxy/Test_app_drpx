@@ -243,8 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				8503F1992AA29AA5000F8461 /* AppCoordinator */,
-				8552766B2A9FB11E0082BA75 /* AppDelegate.swift */,
-				8552766D2A9FB11E0082BA75 /* SceneDelegate.swift */,
 			);
 			path = AppMain;
 			sourceTree = "<group>";
@@ -252,6 +250,8 @@
 		8503F1992AA29AA5000F8461 /* AppCoordinator */ = {
 			isa = PBXGroup;
 			children = (
+				8552766B2A9FB11E0082BA75 /* AppDelegate.swift */,
+				8552766D2A9FB11E0082BA75 /* SceneDelegate.swift */,
 				85A7D18D2AA3397000794801 /* Assembly */,
 				8503F19C2AA29C2F000F8461 /* Navigation */,
 			);

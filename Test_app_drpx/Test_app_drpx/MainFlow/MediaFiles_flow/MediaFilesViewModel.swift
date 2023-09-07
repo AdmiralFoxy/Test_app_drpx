@@ -14,11 +14,11 @@ final class MediaFilesViewModel {
         model.cellTapAction
     }
     
-    var moveFileAction: PassthroughSubject<Void, Never> {
+    var moveFileAction: PassthroughSubject<FilePath, Never> {
         model.cellMoveFileAction
     }
     
-    var deleteFileAction: PassthroughSubject<Void, Never> {
+    var deleteFileAction: PassthroughSubject<FilePath, Never> {
         model.cellDeleteFileAction
     }
     
