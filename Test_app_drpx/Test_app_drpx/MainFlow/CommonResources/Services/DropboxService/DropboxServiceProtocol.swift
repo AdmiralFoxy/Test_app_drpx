@@ -11,10 +11,14 @@ import SwiftyDropbox
 
 protocol DropboxServiceProtocol {
     
+    var cursorSubjects: CurrentValueSubject<String?, Never> { get }
+    var hasMoreSubjects: CurrentValueSubject<Bool, Never> { get }
+    
     func downloadFile(path: String) -> AnyPublisher<MediaFile?, Error>
     func downloadPreview(path: String) -> AnyPublisher<Data?, Error>
     func fetchNextPage() -> AnyPublisher<Files.ListFolderResult?, Error>
     func authorizeFromController(controller: UIViewController)
     func hasMoreFiles() -> Bool
+    func clearPaginationValues()
     
 }

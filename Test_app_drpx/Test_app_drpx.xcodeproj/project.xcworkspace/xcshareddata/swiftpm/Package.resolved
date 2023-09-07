@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "combineexpectations",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/groue/CombineExpectations",
+      "state" : {
+        "branch" : "master",
+        "revision" : "04d4e4b21c9e8361925f03f64a7ecda89ef9974f"
+      }
+    },
+    {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SnapKit/SnapKit",

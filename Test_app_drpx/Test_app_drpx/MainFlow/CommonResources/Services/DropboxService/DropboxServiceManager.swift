@@ -11,16 +11,23 @@ import UIKit
 
 final class DropboxServiceManager: DropboxServiceProtocol {
     
-    let cursorSubject = CurrentValueSubject<String?, Never>(nil)
-    let hasMoreSubject = CurrentValueSubject<Bool, Never>(true)
+    var cursorSubjects: CurrentValueSubject<String?, Never> {
+        _cursorSubject
+    }
+    var hasMoreSubjects: CurrentValueSubject<Bool, Never> {
+        _hasMoreSubject
+    }
+    
+    private let  _cursorSubject = CurrentValueSubject<String?, Never>(nil)
+    private let _hasMoreSubject = CurrentValueSubject<Bool, Never>(true)
     
     var authClient: DropboxClient? {
         DropboxClientsManager.authorizedClient
     }
     
     func clearPaginationValues() {
-        cursorSubject.send(nil)
-        hasMoreSubject.send(true)
+        _cursorSubject.send(nil)
+        _hasMoreSubject.send(true)
     }
     
     func downloadFile(path: String) -> AnyPublisher<MediaFile?, Error> {
@@ -69,21 +76,21 @@ final class DropboxServiceManager: DropboxServiceProtocol {
                 
                 let completion: (Files.ListFolderResult?, CallError<Files.ListFolderError>?, @escaping (Files.ListFolderResult?, Error?) -> Void) -> Void = { response, error, completion in
                     if let result = response {
-                        self.cursorSubject.send(result.cursor)
-                        self.hasMoreSubject.send(result.hasMore)
+                        self._cursorSubject.send(result.cursor)
+                        self._hasMoreSubject.send(result.hasMore)
                         completion(result, nil)
                     } else if let error = error {
-                        self.cursorSubject.send(nil)
-                        self.hasMoreSubject.send(false)
+                        self._cursorSubject.send(nil)
+                        self._hasMoreSubject.send(false)
                         completion(nil, error as? Error)
                     }
                 }
                 
-                if let cursor = self.cursorSubject.value {
+                if let cursor = self._cursorSubject.value {
                     self.authClient?.files.listFolderContinue(cursor: cursor).response { response, error in
                         if let result = response {
-                            self.cursorSubject.send(result.cursor)
-                            self.hasMoreSubject.send(result.hasMore)
+                            self._cursorSubject.send(result.cursor)
+                            self._hasMoreSubject.send(result.hasMore)
                             
                             completion(response, nil) { result, error in
                                 if let error = error {
@@ -93,8 +100,8 @@ final class DropboxServiceManager: DropboxServiceProtocol {
                                 }
                             }
                         } else if let error = error {
-                            self.cursorSubject.send(nil)
-                            self.hasMoreSubject.send(false)
+                            self._cursorSubject.send(nil)
+                            self._hasMoreSubject.send(false)
                             completion(response, nil) { _, _ in
                                 promise(.failure(CustomError.unknownError))
                             }
@@ -140,7 +147,7 @@ final class DropboxServiceManager: DropboxServiceProtocol {
     }
     
     func hasMoreFiles() -> Bool {
-        return hasMoreSubject.value
+        return _hasMoreSubject.value
     }
     
 }

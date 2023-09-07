@@ -24,7 +24,7 @@
 		8552766E2A9FB11E0082BA75 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8552766D2A9FB11E0082BA75 /* SceneDelegate.swift */; };
 		855276752A9FB1200082BA75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 855276742A9FB1200082BA75 /* Assets.xcassets */; };
 		855276782A9FB1200082BA75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 855276762A9FB1200082BA75 /* LaunchScreen.storyboard */; };
-		855276832A9FB1210082BA75 /* Test_app_drpxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855276822A9FB1210082BA75 /* Test_app_drpxTests.swift */; };
+		855276832A9FB1210082BA75 /* ImageView_ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855276822A9FB1210082BA75 /* ImageView_ModelTests.swift */; };
 		8552768D2A9FB1210082BA75 /* Test_app_drpxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8552768C2A9FB1210082BA75 /* Test_app_drpxUITests.swift */; };
 		8552768F2A9FB1210082BA75 /* Test_app_drpxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8552768E2A9FB1210082BA75 /* Test_app_drpxUITestsLaunchTests.swift */; };
 		855B5FE82AA7CED700F9F07A /* PDFModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855B5FE72AA7CED700F9F07A /* PDFModel.swift */; };
@@ -49,6 +49,10 @@
 		8597DEAF2AA8EF55004103A6 /* DropboxCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEAE2AA8EF55004103A6 /* DropboxCacheManager.swift */; };
 		8597DEB22AA9328A004103A6 /* AppSingletoneAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEB12AA9328A004103A6 /* AppSingletoneAssembly.swift */; };
 		8597DEB42AA9363C004103A6 /* CacheUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEB32AA9363C004103A6 /* CacheUtility.swift */; };
+		8597DEB82AA94C4B004103A6 /* DropboxServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEB72AA94C4B004103A6 /* DropboxServiceMock.swift */; };
+		8597DEBB2AA95069004103A6 /* CombineExpectations in Frameworks */ = {isa = PBXBuildFile; productRef = 8597DEBA2AA95069004103A6 /* CombineExpectations */; };
+		8597DEBD2AA9591F004103A6 /* MediaFilesModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEBC2AA9591F004103A6 /* MediaFilesModelTests.swift */; };
+		8597DEBF2AA9598B004103A6 /* DropboxCacheServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597DEBE2AA9598B004103A6 /* DropboxCacheServiceMock.swift */; };
 		85A7D18C2AA2B72900794801 /* DropboxService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D18B2AA2B72900794801 /* DropboxService.swift */; };
 		85A7D1902AA3399400794801 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D18F2AA3399400794801 /* AppConstants.swift */; };
 		85A7D1932AA33D6100794801 /* Publisher+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7D1922AA33D6100794801 /* Publisher+Ext.swift */; };
@@ -105,7 +109,7 @@
 		855276772A9FB1200082BA75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		855276792A9FB1200082BA75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8552767E2A9FB1210082BA75 /* Test_app_drpxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test_app_drpxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		855276822A9FB1210082BA75 /* Test_app_drpxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_app_drpxTests.swift; sourceTree = "<group>"; };
+		855276822A9FB1210082BA75 /* ImageView_ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView_ModelTests.swift; sourceTree = "<group>"; };
 		855276882A9FB1210082BA75 /* Test_app_drpxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test_app_drpxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8552768C2A9FB1210082BA75 /* Test_app_drpxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_app_drpxUITests.swift; sourceTree = "<group>"; };
 		8552768E2A9FB1210082BA75 /* Test_app_drpxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test_app_drpxUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -130,6 +134,9 @@
 		8597DEAE2AA8EF55004103A6 /* DropboxCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxCacheManager.swift; sourceTree = "<group>"; };
 		8597DEB12AA9328A004103A6 /* AppSingletoneAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSingletoneAssembly.swift; sourceTree = "<group>"; };
 		8597DEB32AA9363C004103A6 /* CacheUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheUtility.swift; sourceTree = "<group>"; };
+		8597DEB72AA94C4B004103A6 /* DropboxServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxServiceMock.swift; sourceTree = "<group>"; };
+		8597DEBC2AA9591F004103A6 /* MediaFilesModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaFilesModelTests.swift; sourceTree = "<group>"; };
+		8597DEBE2AA9598B004103A6 /* DropboxCacheServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxCacheServiceMock.swift; sourceTree = "<group>"; };
 		85A7D18B2AA2B72900794801 /* DropboxService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxService.swift; sourceTree = "<group>"; };
 		85A7D18F2AA3399400794801 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		85A7D1922AA33D6100794801 /* Publisher+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Ext.swift"; sourceTree = "<group>"; };
@@ -167,6 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8597DEBB2AA95069004103A6 /* CombineExpectations in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,7 +311,9 @@
 		855276812A9FB1210082BA75 /* Test_app_drpxTests */ = {
 			isa = PBXGroup;
 			children = (
-				855276822A9FB1210082BA75 /* Test_app_drpxTests.swift */,
+				855276822A9FB1210082BA75 /* ImageView_ModelTests.swift */,
+				8597DEBC2AA9591F004103A6 /* MediaFilesModelTests.swift */,
+				8597DEB62AA94C34004103A6 /* Mock */,
 			);
 			path = Test_app_drpxTests;
 			sourceTree = "<group>";
@@ -382,6 +392,15 @@
 				850814DC2AA6A9AA006297BC /* ImageViewAssembly.swift */,
 			);
 			path = Assembly;
+			sourceTree = "<group>";
+		};
+		8597DEB62AA94C34004103A6 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				8597DEB72AA94C4B004103A6 /* DropboxServiceMock.swift */,
+				8597DEBE2AA9598B004103A6 /* DropboxCacheServiceMock.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		85A7D18D2AA3397000794801 /* Assembly */ = {
@@ -559,6 +578,9 @@
 				855276802A9FB1210082BA75 /* PBXTargetDependency */,
 			);
 			name = Test_app_drpxTests;
+			packageProductDependencies = (
+				8597DEBA2AA95069004103A6 /* CombineExpectations */,
+			);
 			productName = Test_app_drpxTests;
 			productReference = 8552767E2A9FB1210082BA75 /* Test_app_drpxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -618,6 +640,7 @@
 				8503F1832AA274C7000F8461 /* XCRemoteSwiftPackageReference "Swinject" */,
 				8503F1912AA285AA000F8461 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				8597DEA82AA8EEDB004103A6 /* XCRemoteSwiftPackageReference "Cache" */,
+				8597DEB92AA95069004103A6 /* XCRemoteSwiftPackageReference "CombineExpectations" */,
 			);
 			productRefGroup = 855276692A9FB11E0082BA75 /* Products */;
 			projectDirPath = "";
@@ -720,7 +743,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				855276832A9FB1210082BA75 /* Test_app_drpxTests.swift in Sources */,
+				8597DEB82AA94C4B004103A6 /* DropboxServiceMock.swift in Sources */,
+				8597DEBF2AA9598B004103A6 /* DropboxCacheServiceMock.swift in Sources */,
+				855276832A9FB1210082BA75 /* ImageView_ModelTests.swift in Sources */,
+				8597DEBD2AA9591F004103A6 /* MediaFilesModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1086,6 +1112,14 @@
 				kind = branch;
 			};
 		};
+		8597DEB92AA95069004103A6 /* XCRemoteSwiftPackageReference "CombineExpectations" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/CombineExpectations";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1108,6 +1142,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8597DEA82AA8EEDB004103A6 /* XCRemoteSwiftPackageReference "Cache" */;
 			productName = Cache;
+		};
+		8597DEBA2AA95069004103A6 /* CombineExpectations */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8597DEB92AA95069004103A6 /* XCRemoteSwiftPackageReference "CombineExpectations" */;
+			productName = CombineExpectations;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

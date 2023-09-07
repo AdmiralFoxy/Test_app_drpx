@@ -16,14 +16,14 @@ final class VideoView_Model: NavigationNode, DVBaseMediaModel {
     var fileInfo = CurrentValueSubject<MediaFile?, Never>(nil)
     
     var filePath: FilePath
-    var dropboxService: DropboxServiceManager
+    var dropboxService: DropboxServiceProtocol
     
     private var cancellables = Set<AnyCancellable>()
     
     init(
         parent: NavigationNode?,
         path: FilePath,
-        dropboxService: DropboxServiceManager
+        dropboxService: DropboxServiceProtocol
     ) {
         self.filePath = path
         self.dropboxService = dropboxService

@@ -21,7 +21,7 @@ final class MediaFilesModel: NavigationNode {
     let cellMoveFileAction = PassthroughSubject<Void, Never>()
     let cellDeleteFileAction = PassthroughSubject<Void, Never>()
     
-    let dropboxService: DropboxServiceManager
+    let dropboxService: DropboxServiceProtocol
     let dropboxCacheService: DropboxCacheProtocol
     
     private let cursorSubject = CurrentValueSubject<String?, Never>(nil)
@@ -33,7 +33,7 @@ final class MediaFilesModel: NavigationNode {
     
     init(
         parent: NavigationNode?,
-        dropboxService: DropboxServiceManager,
+        dropboxService: DropboxServiceProtocol,
         dropboxCacheService: DropboxCacheProtocol
     ) {
         self.dropboxService = dropboxService
@@ -67,12 +67,12 @@ private extension MediaFilesModel {
             .store(in: &cancellables)
         
         dropboxService
-            .cursorSubject
+            .cursorSubjects
             .assign(to: \.value, on: cursorSubject)
             .store(in: &cancellables)
         
         dropboxService
-            .hasMoreSubject
+            .hasMoreSubjects
             .assign(to: \.value, on: hasMoreSubject)
             .store(in: &cancellables)
     }

@@ -16,14 +16,14 @@ protocol DVBaseMediaModel {
     var fileInfo: CurrentValueSubject<MediaFile?, Never> { get }
     
     var filePath: FilePath { get set }
-    var dropboxService: DropboxServiceManager { get set }
+    var dropboxService: DropboxServiceProtocol { get set }
     
     func loadFileData(_ path: FilePath) -> AnyPublisher<Data, Error>
     
     init(
         parent: NavigationNode?,
         path: FilePath,
-        dropboxService: DropboxServiceManager
+        dropboxService: DropboxServiceProtocol
     )
     
 }

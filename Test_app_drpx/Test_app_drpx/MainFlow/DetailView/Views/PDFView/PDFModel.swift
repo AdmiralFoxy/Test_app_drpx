@@ -16,7 +16,7 @@ final class PDFModel: NavigationNode, DVBaseMediaModel {
     var viewState = CurrentValueSubject<ViewState, Never>(.idle)
     var fileInfo = CurrentValueSubject<MediaFile?, Never>(nil)
     
-    var dropboxService: DropboxServiceManager
+    var dropboxService: DropboxServiceProtocol
     var filePath: FilePath
     
     private var cancellables = Set<AnyCancellable>()
@@ -24,7 +24,7 @@ final class PDFModel: NavigationNode, DVBaseMediaModel {
     init(
         parent: NavigationNode?,
         path: FilePath,
-        dropboxService: DropboxServiceManager
+        dropboxService: DropboxServiceProtocol
     ) {
         self.filePath = path
         self.dropboxService = dropboxService

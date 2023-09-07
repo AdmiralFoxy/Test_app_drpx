@@ -20,6 +20,28 @@ struct MediaFile: Codable {
     let size: Int?
     let data: Data?
     
+    init(
+        name: String,
+        path: String,
+        clientModified: Date? = nil,
+        serverModified: Date? = nil,
+        contentHash: String? = nil,
+        id: String? = nil,
+        isDownloadable: Bool? = nil,
+        size: Int? = nil,
+        data: Data? = nil
+    ) {
+        self.name = name
+        self.path = path
+        self.clientModified = clientModified
+        self.serverModified = serverModified
+        self.contentHash = contentHash
+        self.id = id
+        self.isDownloadable = isDownloadable
+        self.size = size
+        self.data = data
+    }
+    
     static func setupMetadata(data: Data, metadata: Files.Metadata) -> MediaFile {
         let fileMetadata = metadata as? Files.FileMetadata
         
